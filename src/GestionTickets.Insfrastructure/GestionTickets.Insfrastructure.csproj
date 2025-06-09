@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>GestionTickets.Infrastructure</RootNamespace>
+        <AssemblyName>GestionTickets.Infrastructure</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GestionTickets.Application\GestionTickets.Application.csproj" />
+    </ItemGroup>
+
+</Project>

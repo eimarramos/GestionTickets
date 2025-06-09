@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>GestionTickets.Application</RootNamespace>
+        <AssemblyName>GestionTickets.Application</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GestionTickets.Domain\GestionTickets.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
