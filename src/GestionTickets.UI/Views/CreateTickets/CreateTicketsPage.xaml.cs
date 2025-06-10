@@ -4,9 +4,9 @@ namespace GestionTickets.UI.Views.CreateTickets;
 
 public partial class CreateTicketsPage : ContentPage
 {
-	public CreateTicketsPage(CreateTicketsViewModel vm)
-	{
-		InitializeComponent();
+    public CreateTicketsPage(CreateTicketsViewModel vm)
+    {
+        InitializeComponent();
 
         BindingContext = vm;
     }

@@ -18,4 +18,16 @@ public partial class BaseViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync("..", false);
     }
+
+    [RelayCommand]
+    private async Task GoToCreateTickets()
+    {
+        await Shell.Current.GoToAsync("create_tickets", false);
+    }
+
+    [RelayCommand]
+    private async Task GoToRickets()
+    {
+        await Shell.Current.GoToAsync("tickets", false);
+    }
 }

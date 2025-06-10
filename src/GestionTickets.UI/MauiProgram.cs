@@ -36,6 +36,7 @@ namespace GestionTickets.UI
         {
             mauiAppBuilder.Services.AddSingleton<CreateTicketsViewModel>();
             mauiAppBuilder.Services.AddSingleton<TicketsViewModel>();
+
             return mauiAppBuilder;
         }
 
