@@ -10,11 +10,11 @@
     Title="GestionTickets">
 
     <TabBar>
-        <Tab Icon="add.png">
+        <Tab Icon="add.png" Title="Registro de Tickets">
             <ShellContent ContentTemplate="{DataTemplate create_tickets:CreateTicketsPage}"
                           Route="create_tickets" />
         </Tab>
-        <Tab Icon="tickets.png">
+        <Tab Icon="tickets.png" Title="Ver Tickets">
             <ShellContent ContentTemplate="{DataTemplate tickets:TicketsPage}"
                           Route="tickets" />
         </Tab>

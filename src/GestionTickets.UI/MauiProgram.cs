@@ -14,11 +14,19 @@ namespace GestionTickets.UI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureMauiHandlers(handlers =>
+                {
+#if ANDROID
+                    handlers.AddHandler(typeof(Entry), typeof(Platforms.Android.CustomEntryHandler));
+#endif
+                })
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Catamaran-Regular.ttf", "CatamaranRegular");
+                    fonts.AddFont("Catamaran-Medium.ttf", "CatamaranMedium");
+                    fonts.AddFont("Catamaran-SemiBold.ttf", "CatamaranSemiBold");
+                    fonts.AddFont("Catamaran-Bold.ttf", "CatamaranBold");
                 })
                 .RegisterViewModels()
                 .RegisterViews();

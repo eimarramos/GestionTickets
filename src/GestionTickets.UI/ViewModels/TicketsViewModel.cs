@@ -2,5 +2,9 @@
 {
     public class TicketsViewModel : BaseViewModel
     {
+        public TicketsViewModel()
+        {
+             Title = "Tickets";
+        }
     }
 }
