@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GestionTickets.UI.Views.SharedViews.TitleView">
-    <HorizontalStackLayout Padding="18,32,0,0">
-        <Label Text="{Binding Title}" />
+             x:Class="GestionTickets.UI.Views.SharedViews.TitleView"
+             xmlns:local="clr-namespace:GestionTickets.UI.ViewModels"
+             x:DataType="local:BaseViewModel">
+    <HorizontalStackLayout Padding="10,32,0,10"
+                           BackgroundColor="{StaticResource Primary}">
+        <Label Text="{Binding Title}"
+               TextColor="{StaticResource White}"
+               FontSize="24"
+               FontFamily="{StaticResource CatamaranBold}" />
     </HorizontalStackLayout>
 </ContentView>

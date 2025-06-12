@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="GestionTickets.UI.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:GestionTickets.UI"   
-    xmlns:create_tickets="clr-namespace:GestionTickets.UI.Views.CreateTickets"
-    xmlns:tickets="clr-namespace:GestionTickets.UI.Views.Tickets"
-    Shell.FlyoutBehavior="Disabled"
-    Title="GestionTickets">
+<Shell x:Class="GestionTickets.UI.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:GestionTickets.UI"
+       xmlns:create_tickets="clr-namespace:GestionTickets.UI.Views.CreateTickets"
+       xmlns:tickets="clr-namespace:GestionTickets.UI.Views.Tickets"
+       Shell.FlyoutBehavior="Disabled"
+       Title="GestionTickets">
 
     <TabBar>
-        <Tab Icon="add.png" Title="Registro de Tickets">
+        <Tab Icon="add.png"
+             Title="Registro de Tickets">
             <ShellContent ContentTemplate="{DataTemplate create_tickets:CreateTicketsPage}"
                           Route="create_tickets" />
         </Tab>
-        <Tab Icon="tickets.png" Title="Ver Tickets">
+        <Tab Icon="tickets.png"
+             Title="Ver Tickets">
             <ShellContent ContentTemplate="{DataTemplate tickets:TicketsPage}"
                           Route="tickets" />
         </Tab>

@@ -1,6 +1,8 @@
-﻿namespace GestionTickets.UI
+﻿using MauiApp = Microsoft.Maui.Controls.Application;
+
+namespace GestionTickets.UI
 {
-    public partial class App : Application
+    public partial class App : MauiApp
     {
         public App()
         {

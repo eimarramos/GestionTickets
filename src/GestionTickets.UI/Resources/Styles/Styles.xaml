@@ -54,4 +54,16 @@
                 Value="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}" />
     </Style>
 
+    <Style TargetType="Border"
+           x:Key="EntryBorder">
+        <Setter Property="Padding"
+                Value="10" />
+        <Setter Property="StrokeThickness"
+                Value="1" />
+        <Setter Property="StrokeShape"
+                Value="RoundRectangle 10" />
+        <Setter Property="Stroke"
+                Value="{StaticResource Gray100}" />
+    </Style>
+
 </ResourceDictionary>

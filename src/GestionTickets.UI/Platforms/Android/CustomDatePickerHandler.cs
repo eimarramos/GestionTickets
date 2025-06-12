@@ -1,10 +1,10 @@
-﻿using AndroidX.AppCompat.Widget;
+﻿using Microsoft.Maui.Platform;
 
 namespace GestionTickets.UI.Platforms.Android
 {
-    public class CustomEntryHandler : Microsoft.Maui.Handlers.EntryHandler
+    public class CustomDatePickerHandler : Microsoft.Maui.Handlers.DatePickerHandler
     {
-        protected override void ConnectHandler(AppCompatEditText platformView)
+        protected override void ConnectHandler(MauiDatePicker platformView)
         {
             platformView.Background = null;
             platformView.SetPadding(0, 0, 0, 0);
