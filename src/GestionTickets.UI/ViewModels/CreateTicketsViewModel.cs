@@ -1,12 +1,7 @@
-﻿using System.Threading;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GestionTickets.Application.Services;
 using GestionTickets.Domain.Entities;
-using Microsoft.Maui;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GestionTickets.UI.ViewModels
 {
@@ -22,7 +17,7 @@ namespace GestionTickets.UI.ViewModels
         }
 
         [ObservableProperty]
-        public partial int TicketNumber { get; set; }
+        public partial string TicketNumber { get; set; } = string.Empty;
 
         [ObservableProperty]
         public partial decimal TicketPrice { get; set; } = 0;
@@ -58,9 +53,26 @@ namespace GestionTickets.UI.ViewModels
             _ = GetNextDefaultTicket(value.Month, value.Year);
         }
 
+        partial void OnTicketPriceChanged(decimal value)
+        {
+            var rounded = Math.Round(value, 2);
+            if (rounded != TicketPrice)
+                TicketPrice = rounded;
+        }
+
+        partial void OnTicketNumberChanged(string value)
+        {
+            if (decimal.TryParse(value, out var ticketNumber))
+            {
+                var rounded = Math.Round(ticketNumber, 0);
+                if (rounded.ToString() != TicketNumber)
+                    TicketNumber = rounded.ToString();
+            }
+        }
+
         public async Task GetNextDefaultTicket(int month, int year)
         {
-            TicketNumber = await _ticketService.GetNextTicketNumberFromMonthAsync(month, year);
+            TicketNumber = (await _ticketService.GetNextTicketNumberFromMonthAsync(month, year)).ToString();
         }
 
         [RelayCommand]
@@ -69,9 +81,10 @@ namespace GestionTickets.UI.ViewModels
             try
             {
                 IsBusy = true;
+
                 await _ticketService.AddTicketAsync(new Ticket
                 {
-                    TicketNumber = this.TicketNumber,
+                    TicketNumber = int.Parse(string.IsNullOrEmpty(this.TicketNumber) ? "0" : this.TicketNumber),
                     Price = this.TicketPrice,
                     Date = this.TicketDate
                 });

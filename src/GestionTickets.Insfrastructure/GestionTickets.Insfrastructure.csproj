@@ -13,8 +13,4 @@
       <ProjectReference Include="..\GestionTickets.Application\GestionTickets.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Data\Configurations\" />
-    </ItemGroup>
-
 </Project>

@@ -11,7 +11,7 @@ namespace GestionTickets.Infrastructure.Data.Configurations
             builder.HasKey(t => t.Id);
 
             builder.Property(t => t.Price)
-                   .HasColumnType("decimal(18,2)");
+                   .HasPrecision(18, 2);
         }
     }
 }
