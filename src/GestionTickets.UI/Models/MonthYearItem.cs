@@ -4,7 +4,7 @@
     {
         public int Year { get; set; }
         public int Month { get; set; }
-        public string Display => $"{ToMonthName(Month)} {Year}";
+        public string Display => $"{ToMonthName(Month)} - {Year}";
 
         private static string ToMonthName(int month)
         {
@@ -12,7 +12,7 @@
             {
             "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-        }[month - 1];
+            }[month - 1];
         }
     }
 }

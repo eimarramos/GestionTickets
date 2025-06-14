@@ -3,24 +3,177 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GestionTickets.UI.Views.Tickets.TicketsPage"
              xmlns:local="clr-namespace:GestionTickets.UI.ViewModels"
+             xmlns:models="clr-namespace:GestionTickets.UI.Models"
+             xmlns:entities="clr-namespace:GestionTickets.Domain.Entities;assembly=GestionTickets.Domain"
              x:DataType="local:TicketsViewModel"
-             xmlns:shared="clr-namespace:GestionTickets.UI.Views.SharedViews">
+             xmlns:shared="clr-namespace:GestionTickets.UI.Views.SharedViews"
+             x:Name="TicketsPageView">
     <Grid>
-        <Grid RowSpacing="10">
+        <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <shared:TitleView Grid.Row="0" />
-            <StackLayout Grid.Row="1"
-                         Orientation="Horizontal"
-                         Spacing="10"
-                         Padding="10,0">
-                <Picker Title="Mes y año"
-                        ItemsSource="{Binding AvailableMonths}"
-                        ItemDisplayBinding="{Binding Display}"
-                        SelectedItem="{Binding SelectedMonthYear}" />
-            </StackLayout>
+            <Border Grid.Row="1"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    Stroke="{StaticResource Gray100}"
+                    Padding="15,5"
+                    Margin="10,10,10,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMonthPickerTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Picker x:Name="monthPicker"
+                            Title="Selecciona un mes"
+                            Grid.Column="0"
+                            ItemsSource="{Binding AvailableMonths}"
+                            ItemDisplayBinding="{Binding Display}"
+                            SelectedItem="{Binding SelectedMonthYear}"
+                            TextColor="{StaticResource Black}"
+                            FontFamily="{StaticResource CatamaranSemiBold}"
+                            FontSize="24" />
+                    <Image Grid.Column="1"
+                           Source="search.png" />
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    Stroke="{StaticResource Gray100}"
+                    Margin="10,10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0"
+                          BackgroundColor="{StaticResource Gray100}"
+                          Padding="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Nº Ticket"
+                               FontSize="16"
+                               TextColor="{StaticResource Black}"
+                               HorizontalOptions="Center"
+                               Grid.Column="0" />
+                        <Label Text="Precio"
+                               FontSize="16"
+                               TextColor="{StaticResource Black}"
+                               HorizontalOptions="Center"
+                               Grid.Column="1" />
+                        <Label Text="Fecha"
+                               FontSize="16"
+                               TextColor="{StaticResource Black}"
+                               HorizontalOptions="Center"
+                               Grid.Column="2" />
+                    </Grid>
+
+                    <CollectionView Grid.Row="1"
+                                    ItemsSource="{Binding Tickets}"
+                                    SelectedItem="{Binding SelectedTicket, Mode=TwoWay}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="entities:Ticket">
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems Mode="Execute">
+                                            <SwipeItemView Command="{Binding Path=BindingContext.DeleteTicketCommand, Source={x:Reference TicketsPageView}}"
+                                                           CommandParameter="{Binding Id}">
+                                                <Grid WidthRequest="100"
+                                                      BackgroundColor="{StaticResource Warning}">
+                                                    <Image Source="delete.png"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center" />
+                                                </Grid>
+                                            </SwipeItemView>
+                                        </SwipeItems>
+                                    </SwipeView.RightItems>
+                                    <Grid BackgroundColor="{StaticResource White}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="1" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding TicketNumber}"
+                                               FontSize="16"
+                                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                                               Grid.Column="0"
+                                               HorizontalOptions="Center"
+                                               Padding="0,10" />
+                                        <Label Text="{Binding Price, StringFormat='{0}€'}"
+                                               FontSize="16"
+                                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                                               Grid.Column="1"
+                                               HorizontalOptions="Center"
+                                               Padding="0,10" />
+                                        <Label Text="{Binding Date, StringFormat='{0:dd/MM/yy}'}"
+                                               FontSize="16"
+                                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                                               Grid.Column="2"
+                                               HorizontalOptions="Center"
+                                               Padding="0,10" />
+                                        <BoxView Grid.Row="1"
+                                                 Grid.ColumnSpan="3"
+                                                 HeightRequest="1"
+                                                 Color="{StaticResource Gray100}" />
+                                    </Grid>
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Grid Grid.Row="2"
+                          Padding="10, 15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Line Grid.Row="0"
+                              Grid.Column="0"
+                              X1="170"
+                              Stroke="{StaticResource Gray100}"
+                              StrokeThickness="2" />
+
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Text="{Binding Total, StringFormat='Total      {0} €', Mode=OneWay}"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+
+                        <Button Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                Padding="12,10"
+                                CornerRadius="10"
+                                ImageSource="share.png"
+                                Text="Compartir"
+                                FontFamily="{StaticResource CatamaranSemiBold}"
+                                FontSize="16" />
+                    </Grid>
+                </Grid>
+            </Border>
         </Grid>
         <shared:LoaderView />
     </Grid>

@@ -21,4 +21,11 @@ public partial class CreateTicketsPage : ContentPage
         datePicker.Focus();
 #endif
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is CreateTicketsViewModel vm)
+            await vm.InitializeAsync();
+    }
 }

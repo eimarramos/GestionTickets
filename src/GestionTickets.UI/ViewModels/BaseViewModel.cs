@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace GestionTickets.UI.ViewModels;
@@ -19,15 +21,20 @@ public partial class BaseViewModel : ObservableObject
         await Shell.Current.GoToAsync("..", false);
     }
 
-    [RelayCommand]
-    private async Task GoToCreateTickets()
+    public async Task DisplayAlert(string title, string message, string cancel)
     {
-        await Shell.Current.GoToAsync("create_tickets", false);
+        await Shell.Current.DisplayAlert(title, message, cancel);
     }
 
-    [RelayCommand]
-    private async Task GoToRickets()
+    public async Task<bool> DisplayAlert(string title, string message, string accept, string cancel)
     {
-        await Shell.Current.GoToAsync("tickets", false);
+        return await Shell.Current.DisplayAlert(title, message, accept, cancel);
+    }
+
+    public async Task DisplayToast(string message)
+    {
+        var toast = Toast.Make(message, ToastDuration.Short, 16);
+
+        await toast.Show();
     }
 }

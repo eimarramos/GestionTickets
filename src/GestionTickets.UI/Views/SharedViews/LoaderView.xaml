@@ -4,7 +4,7 @@
              x:Class="GestionTickets.UI.Views.SharedViews.LoaderView"
              xmlns:local="clr-namespace:GestionTickets.UI.ViewModels"
              x:DataType="local:BaseViewModel">
-    <ActivityIndicator Color="{StaticResource White}"
+    <ActivityIndicator Color="{StaticResource Warning}"
                        IsRunning="{Binding IsBusy}"
                        IsVisible="{Binding IsBusy}"
                        HeightRequest="65"

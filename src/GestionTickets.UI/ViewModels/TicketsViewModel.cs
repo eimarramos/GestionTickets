@@ -1,7 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GestionTickets.Application.Services;
-using GestionTickets.Domain.Repositories;
+using GestionTickets.Domain.Entities;
 using GestionTickets.UI.Models;
 
 namespace GestionTickets.UI.ViewModels
@@ -14,29 +15,60 @@ namespace GestionTickets.UI.ViewModels
         {
             Title = "Tickets";
             _ticketService = ticketService;
-
-            LoadDataAsync();
         }
 
-        private MonthYearItem? selectedMonthYear;
+        [ObservableProperty]
+        public partial decimal Total { get; set; } = 0;
 
-        public MonthYearItem? SelectedMonthYear
-        {
-            get => selectedMonthYear;
-            set => SetProperty(ref selectedMonthYear, value);
-        }
+        [ObservableProperty]
+        public partial MonthYearItem? SelectedMonthYear { get; set; }
 
-        private readonly ObservableCollection<MonthYearItem> availableMonths = new();
-        public ObservableCollection<MonthYearItem> AvailableMonths => availableMonths;
+        [ObservableProperty]
+        public partial ObservableCollection<MonthYearItem> AvailableMonths { get; set; } = [];
 
-        public async void LoadDataAsync()
+        [ObservableProperty]
+        public partial ObservableCollection<Ticket> Tickets { get; set; } = [];
+
+        [ObservableProperty]
+        public partial Ticket? SelectedTicket { get; set; } = null;
+
+        public async Task InitializeAsync()
         {
             try
             {
                 IsBusy = true;
-
                 await LoadAvailableMonthsAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
+        [RelayCommand]
+        public async Task DeleteTicket(int id)
+        {
+            try
+            {
+                var shouldDelete = await DisplayAlert("Borrar ticket", "¿Seguro que quieres borrar el ticket?", "Si", "No");
+
+                if (!shouldDelete) return;
+
+                IsBusy = true;
+
+                await _ticketService.DeleteTicketAsync(id);
+
+                var ticketToRemove = Tickets.FirstOrDefault(t => t.Id == id);
+                if (ticketToRemove != null)
+                {
+                    Tickets.Remove(ticketToRemove);
+
+                    CalculateTotal(Tickets);
+                }
             }
             catch (Exception ex)
             {
@@ -50,13 +82,47 @@ namespace GestionTickets.UI.ViewModels
 
         public async Task LoadAvailableMonthsAsync()
         {
-            availableMonths.Clear();
+            AvailableMonths.Clear();
             var items = await _ticketService.GetAvailableMonthsAndYearsAsync();
             foreach (var (year, month) in items)
             {
-                availableMonths.Add(new MonthYearItem { Year = year, Month = month });
+                AvailableMonths.Add(new MonthYearItem { Year = year, Month = month });
             }
-            SelectedMonthYear = availableMonths.FirstOrDefault();
+            SelectedMonthYear = AvailableMonths.FirstOrDefault();
+        }
+
+        partial void OnSelectedMonthYearChanged(MonthYearItem? value)
+        {
+            if (value == null) return;
+            _ = LoadTicketsByMonthAsync(value);
+        }
+
+        public async Task LoadTicketsByMonthAsync(MonthYearItem month)
+        {
+            try
+            {
+                IsBusy = true;
+                var tickets = await _ticketService.GetTicketsByMonthAsync(month.Month, month.Year);
+                Tickets = new ObservableCollection<Ticket>(tickets);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        partial void OnTicketsChanged(ObservableCollection<Ticket> value)
+        {
+            CalculateTotal(value);
+        }
+
+        public void CalculateTotal(ObservableCollection<Ticket> tickets)
+        {
+            Total = tickets.Sum(t => t.Price);
         }
     }
 }

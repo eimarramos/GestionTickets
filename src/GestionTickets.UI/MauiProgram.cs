@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using GestionTickets.Application;
 using GestionTickets.Infrastructure;
+using GestionTickets.Infrastructure.Data;
 using GestionTickets.UI.ViewModels;
 using GestionTickets.UI.Views.CreateTickets;
 using GestionTickets.UI.Views.Tickets;
@@ -17,7 +18,10 @@ namespace GestionTickets.UI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkit(options =>
+                {
+                    options.SetShouldEnableSnackbarOnWindows(true);
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("Catamaran-Regular.ttf", "CatamaranRegular");
@@ -30,6 +34,7 @@ namespace GestionTickets.UI
 #if ANDROID
                     handlers.AddHandler(typeof(Entry), typeof(Platforms.Android.CustomEntryHandler));
                     handlers.AddHandler(typeof(DatePicker), typeof(Platforms.Android.CustomDatePickerHandler));
+                    handlers.AddHandler(typeof(Picker), typeof(Platforms.Android.CustomPickerHandler));
 #endif
                 })
                 .RegisterServices()
@@ -41,6 +46,8 @@ namespace GestionTickets.UI
 #endif
 
             MauiApp app = builder.Build();
+
+            app.InitialiseDatabase();
 
             return app;
         }
@@ -67,6 +74,13 @@ namespace GestionTickets.UI
             mauiAppBuilder.Services.AddSingleton<TicketsPage>();
 
             return mauiAppBuilder;
+        }
+
+        public static void InitialiseDatabase(this MauiApp app)
+        {
+            var dbContext = app.Services.GetRequiredService<ApplicationDbContext>();
+
+            dbContext.Database.EnsureCreated();
         }
     }
 }
