@@ -30,7 +30,9 @@ namespace GestionTickets.Infrastructure.Repositories
         public async Task<ICollection<Ticket>> GetTicketsByMonthAsync(int month, int year)
         {
             var tickets = await _context.Tickets
+                .AsNoTracking()
                 .Where(t => t.Date.Month == month && t.Date.Year == year)
+                .OrderByDescending(t => t.TicketNumber)
                 .ToListAsync();
 
             return tickets;
@@ -49,11 +51,24 @@ namespace GestionTickets.Infrastructure.Repositories
         public async Task<ICollection<Tuple<int, int>>> GetAvailableMonthsAndYearsAsync()
         {
             var result = await _context.Tickets
+                .AsNoTracking()
                 .Select(t => new { t.Date.Year, t.Date.Month })
-                .Distinct() 
+                .Distinct()
+                .OrderByDescending(t => t.Year)
+                .ThenByDescending(t => t.Month)
                 .ToListAsync();
 
             return result.Select(t => new Tuple<int, int>(t.Year, t.Month)).ToList();
+        }
+
+        public async Task<int> GetNextTicketNumberFromMonthAsync(int month, int year)
+        {
+            var lastTicket = await _context.Tickets
+                .AsNoTracking()
+                .Where(t => t.Date.Month == month && t.Date.Year == year)
+                .OrderByDescending(t => t.TicketNumber)
+                .FirstOrDefaultAsync();
+            return lastTicket?.TicketNumber + 1 ?? 1;
         }
     }
 }
