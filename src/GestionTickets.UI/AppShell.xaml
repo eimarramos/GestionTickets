@@ -6,7 +6,7 @@
        xmlns:create_tickets="clr-namespace:GestionTickets.UI.Views.CreateTickets"
        xmlns:tickets="clr-namespace:GestionTickets.UI.Views.Tickets"
        Shell.FlyoutBehavior="Disabled"
-       Title="GestionTickets">
+       Title="Gestión de Tickets">
 
     <TabBar>
         <Tab Icon="add.png"
