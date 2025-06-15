@@ -4,6 +4,10 @@ using CommunityToolkit.Mvvm.Input;
 using GestionTickets.Application.Services;
 using GestionTickets.Domain.Entities;
 using GestionTickets.UI.Models;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using IContainer = QuestPDF.Infrastructure.IContainer;
 
 namespace GestionTickets.UI.ViewModels
 {
@@ -123,6 +127,110 @@ namespace GestionTickets.UI.ViewModels
         public void CalculateTotal(ObservableCollection<Ticket> tickets)
         {
             Total = tickets.Sum(t => t.Price);
+        }
+
+        [RelayCommand]
+        public async Task SharePdf()
+        {
+            try
+            {
+                IsBusy = true;
+
+                QuestPDF.Settings.License = LicenseType.Community;
+
+                await GuardarYDescargarPdfAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        public async Task GuardarYDescargarPdfAsync()
+        {
+            if (SelectedMonthYear == null || SelectedMonthYear.Month == 0 || SelectedMonthYear.Year == 0)
+            {
+                await DisplayToast("Por favor, selecciona un mes y año válidos.");
+                return;
+            }
+
+            var fileName = $"Ticket_{SelectedMonthYear.Display}.pdf";
+            var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
+
+            var pdfBytes = GenerateTicketPdf(
+                            "Tickets del mes",
+                            SelectedMonthYear.Month,
+                            SelectedMonthYear.Year,
+                            Tickets);
+            File.WriteAllBytes(filePath, pdfBytes);
+
+            // Abrir el PDF (Windows)
+            await Launcher.OpenAsync(new OpenFileRequest
+            {
+                File = new ReadOnlyFile(filePath)
+            });
+        }
+
+        public static byte[] GenerateTicketPdf(string title, int month, int year, IEnumerable<Ticket> tickets)
+        {
+            return Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Size(PageSizes.A4);
+                    page.Margin(2, Unit.Centimetre);
+                    page.Header()
+                        .Text($"{title} - {month:D2}/{year}")
+                        .FontSize(20)
+                        .Bold()
+                        .AlignCenter();
+
+                    page.Content().Column(col =>
+                    {
+                        col.Spacing(10);
+
+                        // Tabla de tickets
+                        col.Item().Table(table =>
+                        {
+                            // Definir columnas
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.ConstantColumn(40);   // Nº
+                                columns.RelativeColumn(2);    // Fecha
+                                columns.RelativeColumn(2);    // Precio
+                            });
+
+                            // Encabezados
+                            table.Header(header =>
+                            {
+                                header.Cell().Element(CellStyle).Text("Nº").Bold();
+                                header.Cell().Element(CellStyle).Text("Fecha").Bold();
+                                header.Cell().Element(CellStyle).Text("Precio").Bold();
+                            });
+
+                            // Filas de tickets
+                            foreach (var ticket in tickets.OrderBy(t => t.TicketNumber))
+                            {
+                                table.Cell().Element(CellStyle).Text(ticket.TicketNumber.ToString());
+                                table.Cell().Element(CellStyle).Text(ticket.Date.ToString("dd/MM/yyyy"));
+                                table.Cell().Element(CellStyle).Text(ticket.Price.ToString("C2"));
+                            }
+
+                            // Estilo de celda
+                            static IContainer CellStyle(IContainer container) =>
+                                container.PaddingVertical(5).PaddingHorizontal(2);
+                        });
+
+                        // Total
+                        col.Item().AlignRight().Text($"Total: {tickets.Sum(t => t.Price):C2}")
+                            .FontSize(14).Bold();
+                    });
+                });
+            }).GeneratePdf();
         }
     }
 }

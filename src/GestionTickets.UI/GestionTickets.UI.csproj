@@ -75,6 +75,7 @@
         <PackageReference Include="CommunityToolkit.Mvvm" />
         <PackageReference Include="Microsoft.Maui.Controls" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+        <PackageReference Include="QuestPDF" />
     </ItemGroup>
 
     <ItemGroup>

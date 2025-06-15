@@ -14,13 +14,14 @@
             </Grid.RowDefinitions>
             <shared:TitleView Grid.Row="0" />
             <ScrollView Grid.Row="1">
-                <Border VerticalOptions="Center"
-                        Margin="11,0,11,0"
-                        Padding="10"
-                        Stroke="{StaticResource Gray100}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 10">
-                    <Grid RowSpacing="10">
+                <Border     VerticalOptions="{OnPlatform WinUI=Start, Default=Center}"
+                            MaximumWidthRequest="800"
+                            Margin="11,0,11,0"
+                            Padding="10"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 10">
+                    <Grid RowSpacing="{OnPlatform WinUI=20, Default=10}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -43,12 +44,16 @@
                                Style="{StaticResource EntryLabel}" />
                         <Border Grid.Row="2"
                                 Style="{StaticResource EntryBorder}">
-                            <HorizontalStackLayout>
-                                <Entry Placeholder="Auto generado si se deja vacío"
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Entry Grid.Row="0"
+                                       Placeholder="Auto generado si se deja vacío"
                                        Keyboard="Numeric"
                                        ReturnType="Next"
                                        Text="{Binding TicketNumber}" />
-                            </HorizontalStackLayout>
+                            </Grid>
                         </Border>
 
                         <Label Grid.Row="3"
@@ -67,9 +72,12 @@
                                        Keyboard="Numeric"
                                        ReturnType="Done"
                                        Text="{Binding TicketPrice}" />
-                                <Image Grid.Column="1"
-                                       Source="euro.png">
-                                </Image>
+                                <Label Grid.Column="1"
+                                       FontSize="24"
+                                       FontFamily="{StaticResource CatamaranRegular}"
+                                       TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                                       VerticalOptions="Center"
+                                       Text="€" />
                             </Grid>
                         </Border>
 
@@ -87,13 +95,14 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Grid.Column="0"
-                                       Source="calendar.png">
+                                       Source="calendar.png"
+                                       IsVisible="{OnPlatform WinUI=False, Default=True}">
                                 </Image>
                                 <DatePicker x:Name="datePicker"
                                             Grid.Column="1"
                                             FontSize="16"
                                             FontFamily="{StaticResource CatamaranRegular}"
-                                            Format="dd 'de' MMMM 'de' yyyy"
+                                            Format="{OnPlatform WinUI=dd/mm/yyyy, Default=dd 'de' MMMM 'de' yyyy}"
                                             Date="{Binding TicketDate}" />
                             </Grid>
                         </Border>
@@ -104,7 +113,9 @@
                                 FontSize="20"
                                 FontFamily="{StaticResource CatamaranSemiBold}"
                                 CornerRadius="10"
-                                Command="{Binding AddTicketCommand}" />
+                                Command="{Binding AddTicketCommand}" 
+                                TextColor="{StaticResource White}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}}"/>
                     </Grid>
                 </Border>
             </ScrollView>
