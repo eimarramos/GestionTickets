@@ -65,6 +65,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Label Text="Nº Ticket"
                                FontSize="16"
@@ -82,6 +83,11 @@
                                HorizontalOptions="Center"
                                Grid.Column="2" />
                         <ImageButton Grid.Column="3"
+                                     Source="edit.png"
+                                     Padding="10,0"
+                                     Opacity="0"
+                                     IsEnabled="False"/>
+                        <ImageButton Grid.Column="4"
                                      Source="delete.png"
                                      Padding="10,0"
                                      Opacity="0"
@@ -104,6 +110,7 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding TicketNumber}"
                                            Grid.Column="0"
@@ -124,6 +131,13 @@
                                            HorizontalOptions="Center"
                                            Padding="0,10" />
                                     <ImageButton Grid.Column="3"
+                                                 Source="edit.png"
+                                                 CornerRadius="0"
+                                                 Command="{Binding Path=BindingContext.GoToEditTicketCommand, Source={x:Reference TicketsPageView}}"
+                                                 CommandParameter="{Binding Id}"
+                                                 BackgroundColor="{StaticResource Blue}"
+                                                 Padding="10,0"/>
+                                    <ImageButton Grid.Column="4"
                                                  Source="delete.png"
                                                  CornerRadius="0"
                                                  Command="{Binding Path=BindingContext.DeleteTicketCommand, Source={x:Reference TicketsPageView}}"
@@ -131,7 +145,7 @@
                                                  BackgroundColor="{StaticResource Warning}"
                                                  Padding="10,0"/>
                                     <BoxView Grid.Row="1"
-                                             Grid.ColumnSpan="4"
+                                             Grid.ColumnSpan="5"
                                              HeightRequest="1"
                                              Color="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" />
                                 </Grid>

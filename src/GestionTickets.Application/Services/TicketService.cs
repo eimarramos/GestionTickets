@@ -41,5 +41,10 @@ namespace GestionTickets.Application.Services
         {
             return await _ticketRepository.GetNextTicketNumberFromMonthAsync(month, year);
         }
+
+        public async Task<Ticket?> GetTicketByIdAsync(int id)
+        {
+            return await _ticketRepository.GetTicketByIdAsync(id);
+        }
     }
 }

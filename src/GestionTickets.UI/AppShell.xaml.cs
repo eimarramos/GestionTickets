@@ -1,5 +1,6 @@
 ﻿
 using GestionTickets.UI.Views.CreateTicket;
+using GestionTickets.UI.Views.EditTicket;
 using GestionTickets.UI.Views.Tickets;
 
 namespace GestionTickets.UI
@@ -11,6 +12,7 @@ namespace GestionTickets.UI
             InitializeComponent();
             Routing.RegisterRoute("create_tickets", typeof(CreateTicketPage));
             Routing.RegisterRoute("tickets", typeof(TicketsPage));
+            Routing.RegisterRoute("edit_ticket", typeof(EditTicketPage));
         }
     }
 }

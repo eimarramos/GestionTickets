@@ -89,6 +89,9 @@
         <MauiXaml Update="Views\CreateTicket\CreateTicketPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
+        <MauiXaml Update="Views\EditTicket\EditTicketPage.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
         <MauiXaml Update="Views\SharedViews\LoaderView.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
@@ -98,10 +101,6 @@
         <MauiXaml Update="Views\Tickets\TicketsPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Views\EditTicket\" />
     </ItemGroup>
 
     <ItemGroup>

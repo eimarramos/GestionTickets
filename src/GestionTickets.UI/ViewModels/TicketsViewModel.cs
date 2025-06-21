@@ -82,6 +82,30 @@ namespace GestionTickets.UI.ViewModels
             }
         }
 
+        [RelayCommand]
+        public async Task GoToEditTicket(int id)
+        {
+            if (IsBusy) return;
+
+            try
+            {
+                IsBusy = true;
+                var parameters = new ShellNavigationQueryParameters
+                {
+                    { "TicketId", id }
+                };
+                await Shell.Current.GoToAsync("edit_ticket", parameters);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         public async Task LoadAvailableMonthsAsync()
         {
             AvailableMonths.Clear();

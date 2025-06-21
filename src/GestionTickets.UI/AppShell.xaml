@@ -5,6 +5,7 @@
        xmlns:local="clr-namespace:GestionTickets.UI"
        xmlns:create_tickets="clr-namespace:GestionTickets.UI.Views.CreateTicket"
        xmlns:tickets="clr-namespace:GestionTickets.UI.Views.Tickets"
+       xmlns:edit_ticket="clr-namespace:GestionTickets.UI.Views.EditTicket"
        Shell.FlyoutBehavior="Disabled"
        Title="Gestión de Tickets">
 
@@ -20,4 +21,6 @@
                           Route="tickets" />
         </Tab>
     </TabBar>
+
+    <ShellContent ContentTemplate="{DataTemplate edit_ticket:EditTicketPage}" />
 </Shell>

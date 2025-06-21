@@ -16,12 +16,12 @@ namespace GestionTickets.Infrastructure.Repositories
 
         public async Task AddTicketAsync(Ticket ticket)
         {
-            if(ticket.TicketNumber == 0)
+            if (ticket.TicketNumber == 0)
             {
                 await GetNextTicketNumberFromMonthAsync(ticket.Date.Month, ticket.Date.Year)
                      .ContinueWith(t => ticket.TicketNumber = t.Result);
             }
-               
+
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
         }
@@ -75,6 +75,13 @@ namespace GestionTickets.Infrastructure.Repositories
                 .OrderByDescending(t => t.TicketNumber)
                 .FirstOrDefaultAsync();
             return lastTicket?.TicketNumber + 1 ?? 1;
+        }
+
+        public async Task<Ticket?> GetTicketByIdAsync(int id)
+        {
+            return await _context.Tickets
+                .AsNoTracking()
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
     }
 }
