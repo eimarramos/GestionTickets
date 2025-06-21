@@ -5,11 +5,11 @@ using GestionTickets.Domain.Entities;
 
 namespace GestionTickets.UI.ViewModels
 {
-    public partial class CreateTicketsViewModel : BaseViewModel
+    public partial class CreateTicketViewModel : BaseViewModel
     {
         private TicketService _ticketService;
 
-        public CreateTicketsViewModel(TicketService ticketService)
+        public CreateTicketViewModel(TicketService ticketService)
         {
             Title = "Registro de tickets";
 

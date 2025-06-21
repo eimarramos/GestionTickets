@@ -1,11 +1,11 @@
 using GestionTickets.UI.ViewModels;
 using Microsoft.Maui.Handlers;
 
-namespace GestionTickets.UI.Views.CreateTickets;
+namespace GestionTickets.UI.Views.CreateTicket;
 
-public partial class CreateTicketsPage : ContentPage
+public partial class CreateTicketPage : ContentPage
 {
-    public CreateTicketsPage(CreateTicketsViewModel vm)
+    public CreateTicketPage(CreateTicketViewModel vm)
     {
         InitializeComponent();
 
@@ -25,7 +25,7 @@ public partial class CreateTicketsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        if (BindingContext is CreateTicketsViewModel vm)
+        if (BindingContext is CreateTicketViewModel vm)
             await vm.InitializeAsync();
     }
 }

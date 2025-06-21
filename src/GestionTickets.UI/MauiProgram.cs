@@ -3,7 +3,7 @@ using GestionTickets.Application;
 using GestionTickets.Infrastructure;
 using GestionTickets.Infrastructure.Data;
 using GestionTickets.UI.ViewModels;
-using GestionTickets.UI.Views.CreateTickets;
+using GestionTickets.UI.Views.CreateTicket;
 using GestionTickets.UI.Views.Tickets;
 using Microsoft.Extensions.Logging;
 
@@ -62,7 +62,7 @@ namespace GestionTickets.UI
 
         public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddSingleton<CreateTicketsViewModel>();
+            mauiAppBuilder.Services.AddSingleton<CreateTicketViewModel>();
             mauiAppBuilder.Services.AddSingleton<TicketsViewModel>();
 
             return mauiAppBuilder;
@@ -70,7 +70,7 @@ namespace GestionTickets.UI
 
         public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddSingleton<CreateTicketsPage>();
+            mauiAppBuilder.Services.AddSingleton<CreateTicketPage>();
             mauiAppBuilder.Services.AddSingleton<TicketsPage>();
 
             return mauiAppBuilder;
