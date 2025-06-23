@@ -181,11 +181,10 @@ namespace GestionTickets.UI.ViewModels
                 return;
             }
 
-            var fileName = $"Ticket_{SelectedMonthYear.Display}.pdf";
+            var fileName = $"Tickets {SelectedMonthYear.Display}.pdf";
             var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
 
             var pdfBytes = PdfGenerator.GenerateTicketPdf(
-                            "Tickets del mes",
                             SelectedMonthYear.Month,
                             SelectedMonthYear.Year,
                             Tickets);

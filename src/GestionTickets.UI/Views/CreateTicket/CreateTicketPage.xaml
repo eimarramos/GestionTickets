@@ -14,13 +14,13 @@
             <shared:TitleView Grid.Row="0" />
             <ScrollView Grid.Row="1">
                 <Border     VerticalOptions="{OnPlatform WinUI=Start, Default=Center}"
-                            MaximumWidthRequest="800"
+                            MaximumWidthRequest="700"
                             Margin="11,0,11,0"
                             Padding="10"
                             Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 10">
-                    <Grid RowSpacing="{OnPlatform WinUI=20, Default=10}">
+                    <Grid RowSpacing="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -107,14 +107,14 @@
                         </Border>
 
                         <Button Grid.Row="7"
-                                Margin="0,97,0,0"
+                                Margin="0,54,0,0"
                                 Text="Agregar Ticket"
                                 FontSize="20"
                                 FontFamily="{StaticResource CatamaranSemiBold}"
                                 CornerRadius="10"
-                                Command="{Binding AddTicketCommand}" 
+                                Command="{Binding AddTicketCommand}"
                                 TextColor="{StaticResource White}"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}}"/>
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}}" />
                     </Grid>
                 </Border>
             </ScrollView>
