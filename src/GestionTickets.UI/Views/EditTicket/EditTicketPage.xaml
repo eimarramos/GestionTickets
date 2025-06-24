@@ -101,7 +101,7 @@
                                             Grid.Column="1"
                                             FontSize="16"
                                             FontFamily="{StaticResource CatamaranRegular}"
-                                            Format="{OnPlatform WinUI=dd/mm/yyyy, Default=dd 'de' MMMM 'de' yyyy}"
+                                            Format="{OnPlatform WinUI='dd/MM/yyyy', Android='dd \'de\' MMMM \'de\' yyyy'}"
                                             Date="{Binding Ticket.Date}" />
                             </Grid>
                         </Border>
@@ -109,12 +109,7 @@
                         <Button Grid.Row="7"
                                 Margin="0,54,0,0"
                                 Text="Editar"
-                                FontSize="20"
-                                FontFamily="{StaticResource CatamaranSemiBold}"
-                                CornerRadius="10"
-                                Command="{Binding UpdateTicketCommand}"
-                                TextColor="{StaticResource White}"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}}" />
+                                Command="{Binding UpdateTicketCommand}" />
                     </Grid>
                 </Border>
             </ScrollView>

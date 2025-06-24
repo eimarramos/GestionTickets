@@ -15,6 +15,8 @@ namespace GestionTickets.UI.Utils
         private static readonly string Gray400 = "#6e6e6e";
         private static readonly string White = "#FFFFFF";
 
+        private static readonly string Sign = "";
+
         public static byte[] GenerateTicketPdf(int month, int year, IEnumerable<Ticket> tickets)
         {
             return Document.Create(container =>
@@ -83,7 +85,7 @@ namespace GestionTickets.UI.Utils
                         });
 
                         // Firma
-                        col.Item().AlignRight().PaddingTop(20).Text("")
+                        col.Item().AlignRight().PaddingTop(20).Text(Sign)
                             .FontSize(10).FontColor(Gray400).Italic();
                     });
                 });

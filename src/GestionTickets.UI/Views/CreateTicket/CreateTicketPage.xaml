@@ -13,13 +13,13 @@
             </Grid.RowDefinitions>
             <shared:TitleView Grid.Row="0" />
             <ScrollView Grid.Row="1">
-                <Border     VerticalOptions="{OnPlatform WinUI=Start, Default=Center}"
-                            MaximumWidthRequest="700"
-                            Margin="11,0,11,0"
-                            Padding="10"
-                            Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 10">
+                <Border VerticalOptions="{OnPlatform WinUI=Start, Default=Center}"
+                        MaximumWidthRequest="700"
+                        Margin="11,0,11,0"
+                        Padding="10"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10">
                     <Grid RowSpacing="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -71,12 +71,8 @@
                                        Keyboard="Numeric"
                                        ReturnType="Done"
                                        Text="{Binding TicketPrice}" />
-                                <Label Grid.Column="1"
-                                       FontSize="24"
-                                       FontFamily="{StaticResource CatamaranRegular}"
-                                       TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
-                                       VerticalOptions="Center"
-                                       Text="€" />
+                                <Image Grid.Column="1"
+                                       Source="euro.png" />
                             </Grid>
                         </Border>
 
@@ -101,7 +97,7 @@
                                             Grid.Column="1"
                                             FontSize="16"
                                             FontFamily="{StaticResource CatamaranRegular}"
-                                            Format="{OnPlatform WinUI=dd/mm/yyyy, Default=dd 'de' MMMM 'de' yyyy}"
+                                            Format="{OnPlatform WinUI='dd/MM/yyyy', Android='dd \'de\' MMMM \'de\' yyyy'}"
                                             Date="{Binding TicketDate}" />
                             </Grid>
                         </Border>
@@ -109,12 +105,7 @@
                         <Button Grid.Row="7"
                                 Margin="0,54,0,0"
                                 Text="Agregar Ticket"
-                                FontSize="20"
-                                FontFamily="{StaticResource CatamaranSemiBold}"
-                                CornerRadius="10"
-                                Command="{Binding AddTicketCommand}"
-                                TextColor="{StaticResource White}"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}}" />
+                                Command="{Binding AddTicketCommand}" />
                     </Grid>
                 </Border>
             </ScrollView>

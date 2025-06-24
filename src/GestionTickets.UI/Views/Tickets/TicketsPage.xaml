@@ -69,29 +69,29 @@
                         </Grid.ColumnDefinitions>
                         <Label Text="Nº Ticket"
                                FontSize="16"
-                                           TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                HorizontalOptions="Center"
                                Grid.Column="0" />
                         <Label Text="Precio"
                                FontSize="16"
-                                           TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                HorizontalOptions="Center"
                                Grid.Column="1" />
                         <Label Text="Fecha"
                                FontSize="16"
-                                           TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                HorizontalOptions="Center"
                                Grid.Column="2" />
                         <ImageButton Grid.Column="3"
                                      Source="edit.png"
                                      Padding="10,0"
                                      Opacity="0"
-                                     IsEnabled="False"/>
+                                     IsEnabled="False" />
                         <ImageButton Grid.Column="4"
                                      Source="delete.png"
                                      Padding="10,0"
                                      Opacity="0"
-                                     IsEnabled="False"/>
+                                     IsEnabled="False" />
                     </Grid>
 
                     <CollectionView Grid.Row="1"
@@ -118,7 +118,7 @@
                                            TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                            HorizontalOptions="Center"
                                            Padding="0,10" />
-                                    <Label Text="{Binding Price, StringFormat='{0:F2}€'}"
+                                    <Label Text="{Binding Price, StringFormat='{0:F2} €'}"
                                            Grid.Column="1"
                                            FontSize="16"
                                            TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
@@ -132,18 +132,14 @@
                                            Padding="0,10" />
                                     <ImageButton Grid.Column="3"
                                                  Source="edit.png"
-                                                 CornerRadius="0"
                                                  Command="{Binding Path=BindingContext.GoToEditTicketCommand, Source={x:Reference TicketsPageView}}"
-                                                 CommandParameter="{Binding Id}"
-                                                 BackgroundColor="{StaticResource Blue}"
-                                                 Padding="10,0"/>
+                                                 CommandParameter="{Binding Id}" 
+                                                 Style="{StaticResource Edit}"/>
                                     <ImageButton Grid.Column="4"
                                                  Source="delete.png"
-                                                 CornerRadius="0"
                                                  Command="{Binding Path=BindingContext.DeleteTicketCommand, Source={x:Reference TicketsPageView}}"
                                                  CommandParameter="{Binding Id}"
-                                                 BackgroundColor="{StaticResource Warning}"
-                                                 Padding="10,0"/>
+                                                 Style="{StaticResource Delete}"/>
                                     <BoxView Grid.Row="1"
                                              Grid.ColumnSpan="5"
                                              HeightRequest="1"
@@ -174,7 +170,7 @@
                         <Label Grid.Row="1"
                                Grid.Column="0"
                                HorizontalOptions="{OnPlatform WinUI=End, Default=Start}"
-                               Text="{Binding Total, StringFormat='Total      {0} €', Mode=OneWay}"
+                               Text="{Binding Total, StringFormat='Total      {0:F2} €', Mode=OneWay}"
                                TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                FontSize="20"
                                FontAttributes="Bold" />
@@ -183,14 +179,9 @@
                                 Grid.RowSpan="2"
                                 Grid.Column="1"
                                 Padding="12,10"
-                                CornerRadius="10"
                                 ImageSource="share.png"
                                 Text="Compartir"
-                                FontFamily="{StaticResource CatamaranSemiBold}"
-                                FontSize="16"
-                                Command="{Binding SharePdfCommand}"
-                                TextColor="{StaticResource White}" 
-                                BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}}" />
+                                Command="{Binding SharePdfCommand}" />
                     </Grid>
                 </Grid>
             </Border>

@@ -1,4 +1,5 @@
-﻿using MauiApp = Microsoft.Maui.Controls.Application;
+﻿using GestionTickets.UI.Views.Window;
+using MauiApp = Microsoft.Maui.Controls.Application;
 
 namespace GestionTickets.UI
 {
@@ -11,7 +12,7 @@ namespace GestionTickets.UI
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            return new MainWindow(new AppShell());
         }
     }
 }

@@ -22,6 +22,8 @@ namespace GestionTickets.Infrastructure.Repositories
                      .ContinueWith(t => ticket.TicketNumber = t.Result);
             }
 
+            ticket.Price = Math.Round(ticket.Price, 2);
+
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
         }
@@ -50,7 +52,7 @@ namespace GestionTickets.Infrastructure.Repositories
                 .Where(t => t.Id == ticket.Id)
                 .ExecuteUpdateAsync(oldTicket => oldTicket
                     .SetProperty(t => t.TicketNumber, ticket.TicketNumber)
-                    .SetProperty(t => t.Price, ticket.Price)
+                    .SetProperty(t => t.Price, Math.Round(ticket.Price, 2))
                     .SetProperty(t => t.Date, ticket.Date));
         }
 
