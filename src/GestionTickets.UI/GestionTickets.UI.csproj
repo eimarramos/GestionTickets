@@ -55,7 +55,6 @@
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.png" />
-        <MauiIcon Include="Resources\Images\appiconsmall.png" />
 
         <!-- Splash Screen -->
         <MauiSplashScreen Include="Resources\Splash\splash.png" />
@@ -115,6 +114,12 @@
       <Compile Update="Views\CreateTicket\CreateTicketPage.xaml.cs">
         <DependentUpon>CreateTicketPage.xaml</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Views\Window\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </None>
     </ItemGroup>
 
 </Project>
