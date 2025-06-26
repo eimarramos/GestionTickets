@@ -7,6 +7,7 @@
              xmlns:entities="clr-namespace:GestionTickets.Domain.Entities;assembly=GestionTickets.Domain"
              x:DataType="local:TicketsViewModel"
              xmlns:shared="clr-namespace:GestionTickets.UI.Views.SharedViews"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="TicketsPageView">
     <Grid>
         <Grid>
@@ -31,7 +32,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Picker x:Name="monthPicker"
-                            Title="Selecciona un mes"
+                            Title="{OnPlatform Android='Selecciona un mes'}"
                             Grid.Column="0"
                             ItemsSource="{Binding AvailableMonths}"
                             ItemDisplayBinding="{Binding Display}"
@@ -41,13 +42,18 @@
                             FontSize="24" />
                     <Image Grid.Column="1"
                            Source="search.png"
-                           IsVisible="{OnPlatform WinUI=false, Default=true}" />
+                           IsVisible="{OnPlatform WinUI=false, Default=true}">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                        </Image.Behaviors>
+                    </Image>
                 </Grid>
             </Border>
 
             <Border Grid.Row="2"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 10"
+                    BackgroundColor="{StaticResource White}"
                     Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
                     Margin="10,10">
                 <Grid>
@@ -116,13 +122,15 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding TicketNumber}"
+                                    <Label Text="{Binding TicketNumber, StringFormat='#{0}'}"
+                                           FontAttributes="Bold"
                                            Grid.Column="0"
                                            FontSize="16"
                                            TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                            HorizontalOptions="Center"
                                            Padding="0,10" />
                                     <Label Text="{Binding Price, StringFormat='{0:F2} €'}"
+                                           FontAttributes="Bold"
                                            Grid.Column="1"
                                            FontSize="16"
                                            TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
@@ -139,13 +147,21 @@
                                                  Source="edit.png"
                                                  Command="{Binding Path=BindingContext.GoToEditTicketCommand, Source={x:Reference TicketsPageView}}"
                                                  CommandParameter="{Binding Id}"
-                                                 Style="{StaticResource Edit}" />
+                                                 Style="{StaticResource Edit}">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Blue}" />
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
                                     <ImageButton Grid.Column="4"
                                                  WidthRequest="35"
                                                  Source="delete.png"
                                                  Command="{Binding Path=BindingContext.DeleteTicketCommand, Source={x:Reference TicketsPageView}}"
                                                  CommandParameter="{Binding Id}"
-                                                 Style="{StaticResource Delete}" />
+                                                 Style="{StaticResource Delete}">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Warning}" />
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
                                     <BoxView Grid.Row="1"
                                              Grid.ColumnSpan="5"
                                              HeightRequest="1"
@@ -184,10 +200,11 @@
                         <Button Grid.Row="0"
                                 Grid.RowSpan="2"
                                 Grid.Column="1"
-                                Padding="12,10"
-                                ImageSource="share.png"
-                                Text="Compartir"
-                                Command="{Binding SharePdfCommand}" />
+                                Padding="12,8"
+                                Text="Generar PDF"
+                                ImageSource="download.png"
+                                Command="{Binding GeneratePdfCommand}">
+                        </Button>
                     </Grid>
                 </Grid>
             </Border>

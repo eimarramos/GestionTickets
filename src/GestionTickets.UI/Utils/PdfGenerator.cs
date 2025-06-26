@@ -31,7 +31,7 @@ namespace GestionTickets.UI.Utils
             headerTable.SetBackgroundColor(primaryColor).SetMarginBottom(20);
             headerTable.AddCell(new Cell().Add(new Paragraph("Tickets del mes").SetFontColor(ColorConstants.WHITE).SetFontSize(22).SimulateBold().SetPaddingLeft(5))
                 .SetBorder(Border.NO_BORDER).SetVerticalAlignment(VerticalAlignment.MIDDLE));
-            headerTable.AddCell(new Cell().Add(new Paragraph($"{month:D2}/{year}").SetFontColor(ColorConstants.WHITE).SetFontSize(16).SetPaddingRight(5))
+            headerTable.AddCell(new Cell().Add(new Paragraph($"{month:D2} / {year}").SetFontColor(ColorConstants.WHITE).SetFontSize(16).SetPaddingRight(5))
                 .SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.RIGHT).SetVerticalAlignment(VerticalAlignment.MIDDLE));
             document.Add(headerTable);
 
@@ -41,7 +41,7 @@ namespace GestionTickets.UI.Utils
                 .SetBorder(Border.NO_BORDER));
             resumenTable.AddCell(new Cell().Add(new Paragraph($"Total de tickets: {tickets.Count()}").SetFontColor(gray400).SetFontSize(12).SetPadding(3))
                 .SetBorder(Border.NO_BORDER));
-            resumenTable.AddCell(new Cell().Add(new Paragraph($"Total recaudado: {tickets.Sum(t => t.Price):C2}").SetFontColor(gray400).SetFontSize(12).SetPadding(3))
+            resumenTable.AddCell(new Cell().Add(new Paragraph($"Total: {tickets.Sum(t => t.Price):C2}").SetFontColor(gray400).SetFontSize(12).SetPadding(3))
                 .SetBorder(Border.NO_BORDER));
             document.Add(resumenTable);
 
@@ -68,7 +68,7 @@ namespace GestionTickets.UI.Utils
             document.Add(table);
 
             // Firma
-            document.Add(new Paragraph("Adolfo Sacari")
+            document.Add(new Paragraph("")
                 .SetFontColor(gray400).SetFontSize(10).SimulateItalic().SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(20));
 
             document.Close();

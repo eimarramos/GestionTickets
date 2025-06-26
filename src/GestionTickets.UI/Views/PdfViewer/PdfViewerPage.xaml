@@ -5,7 +5,30 @@
              x:DataType="local:PdfViewerViewModel"
              x:Class="GestionTickets.UI.Views.PdfViewer.PdfViewerPage">
     <Grid>
-        <WebView Source="{Binding PdfSource}"
-                 x:Name="pdfview" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid BackgroundColor="{StaticResource Primary}"
+              Padding="10,32,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="{Binding Title}"
+                   TextColor="{StaticResource White}"
+                   FontSize="24"
+                   FontFamily="{StaticResource CatamaranBold}" />
+            <Button Grid.Column="1"
+                    Padding="10,4"
+                    Text="Compartir"
+                    FontSize="18"
+                    ImageSource="share.png"
+                    MaximumHeightRequest="55"
+                    Command="{Binding SharePdfCommand}"
+         />
+        </Grid>
+        <WebView Grid.Row="1"
+                 Source="{Binding PdfSource}" />
     </Grid>
 </ContentPage>

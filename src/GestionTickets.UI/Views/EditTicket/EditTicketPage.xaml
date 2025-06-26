@@ -4,7 +4,8 @@
              x:Class="GestionTickets.UI.Views.EditTicket.EditTicketPage"
              xmlns:local="clr-namespace:GestionTickets.UI.ViewModels"
              x:DataType="local:EditTicketViewModel"
-             xmlns:shared="clr-namespace:GestionTickets.UI.Views.SharedViews">
+             xmlns:shared="clr-namespace:GestionTickets.UI.Views.SharedViews"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     <Grid>
         <Grid RowSpacing="10">
             <Grid.RowDefinitions>
@@ -32,7 +33,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0"
-                               Text="Editar ticket"
+                               Text="Editar"
                                TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                FontSize="24"
                                FontFamily="{StaticResource CatamaranSemiBold}"
@@ -71,12 +72,12 @@
                                        Keyboard="Numeric"
                                        ReturnType="Done"
                                        Text="{Binding Ticket.Price}" />
-                                <Label Grid.Column="1"
-                                       FontSize="24"
-                                       FontFamily="{StaticResource CatamaranRegular}"
-                                       TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
-                                       VerticalOptions="Center"
-                                       Text="€" />
+                                <Image Grid.Column="1"
+                                       Source="euro.png">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                    </Image.Behaviors>
+                                </Image>
                             </Grid>
                         </Border>
 
@@ -96,6 +97,9 @@
                                 <Image Grid.Column="0"
                                        Source="calendar.png"
                                        IsVisible="{OnPlatform WinUI=False, Default=True}">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                    </Image.Behaviors>
                                 </Image>
                                 <DatePicker x:Name="datePicker"
                                             Grid.Column="1"
@@ -108,7 +112,7 @@
 
                         <Button Grid.Row="7"
                                 Margin="0,54,0,0"
-                                Text="Editar"
+                                Text="Aceptar"
                                 Command="{Binding UpdateTicketCommand}" />
                     </Grid>
                 </Border>

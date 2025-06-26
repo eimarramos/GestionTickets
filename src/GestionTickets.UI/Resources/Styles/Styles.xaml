@@ -92,25 +92,29 @@
                 Value="8,0" />
         <Setter Property="Margin"
                 Value="3" />
+        <Setter Property="BorderWidth"
+                Value="1" />
+        <Setter Property="BorderColor"
+                Value="{StaticResource Gray200}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource Warning}" />
+                                    Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource WarningHover}" />
+                                    Value="{StaticResource Gray100}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource WarningPressed}" />
+                                    Value="{StaticResource Gray200}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -126,25 +130,29 @@
                 Value="8,0" />
         <Setter Property="Margin"
                 Value="3" />
+        <Setter Property="BorderWidth"
+                Value="1" />
+        <Setter Property="BorderColor"
+                Value="{StaticResource Gray200}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource Blue}" />
+                                    Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource BlueHover}" />
+                                    Value="{StaticResource Gray100}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource BluePressed}" />
+                                    Value="{StaticResource Gray200}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

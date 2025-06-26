@@ -4,10 +4,6 @@ using GestionTickets.Application.Services;
 using GestionTickets.Domain.Entities;
 using GestionTickets.UI.Models;
 using GestionTickets.UI.Utils;
-using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Draw;
-using iText.Layout;
-using iText.Layout.Element;
 using System.Collections.ObjectModel;
 using System.Net;
 
@@ -156,13 +152,21 @@ namespace GestionTickets.UI.ViewModels
         }
 
         [RelayCommand]
-        public async Task SharePdf()
+        public async Task GeneratePdf()
         {
             try
             {
                 IsBusy = true;
 
-                await GneratePdf();
+                (bool IsSuccess, string Message, string pdfSource) = await UsePdfGenerator();
+
+                if (!IsSuccess)
+                {
+                    await Shell.Current.DisplayAlert("Error", Message, "OK");
+                    return;
+                }
+
+                await GoToPdfViewer(pdfSource);
             }
             catch (Exception ex)
             {
@@ -174,30 +178,25 @@ namespace GestionTickets.UI.ViewModels
             }
         }
 
-        public async Task GneratePdf()
+        public async Task<(bool IsSuccess, string Error, string pdfSource)> UsePdfGenerator()
         {
-            // Obtener mes y año seleccionados
-            var month = SelectedMonthYear?.Month ?? DateTime.Now.Month;
-            var year = SelectedMonthYear?.Year ?? DateTime.Now.Year;
+            if (SelectedMonthYear == null)
+            {
+                return (false, "Asegúrate de tener un mes seleccionado.", string.Empty);
+            }
+
+            string pdfSource = string.Empty;
+            var month = SelectedMonthYear.Month;
+            var year = SelectedMonthYear.Year;
 
             string fileName = $"Tickets {month} - {year}.pdf";
 
-#if ANDROID
-            var docsDirectory = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments);
-            var filePath = Path.Combine(docsDirectory!.AbsoluteFile.Path, fileName);
-#else
-            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
-#endif
+            var tempDirectory = FileSystem.CacheDirectory;
+            var filePath = Path.Combine(tempDirectory, fileName);
 
-
-
-            // Generar PDF en memoria usando iText
             var pdfBytes = PdfGenerator.GenerateTicketPdfIText(month, year, Tickets);
 
-            // Guardar el PDF en disco
             await File.WriteAllBytesAsync(filePath, pdfBytes);
-
-            string pdfSource = string.Empty;
 
 #if ANDROID
             pdfSource = $"file:///android_asset/pdfjs/web/viewer.html?file=file://{WebUtility.UrlEncode(filePath)}";
@@ -205,10 +204,15 @@ namespace GestionTickets.UI.ViewModels
             pdfSource = filePath;
 #endif
 
+            return (true, string.Empty, pdfSource);
+        }
+
+        private async Task GoToPdfViewer(string pdfSource)
+        {
             var parameters = new ShellNavigationQueryParameters
-            {
-                { "PdfSource", pdfSource }
-            };
+                {
+                    { "PdfSource", pdfSource }
+                };
             await Shell.Current.GoToAsync("pdf_viewer", parameters);
         }
     }
