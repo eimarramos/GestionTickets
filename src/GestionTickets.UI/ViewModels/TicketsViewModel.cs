@@ -1,11 +1,15 @@
-﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GestionTickets.Application.Services;
 using GestionTickets.Domain.Entities;
 using GestionTickets.UI.Models;
 using GestionTickets.UI.Utils;
-using QuestPDF.Infrastructure;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Layout;
+using iText.Layout.Element;
+using System.Collections.ObjectModel;
+using System.Net;
 
 namespace GestionTickets.UI.ViewModels
 {
@@ -158,8 +162,6 @@ namespace GestionTickets.UI.ViewModels
             {
                 IsBusy = true;
 
-                QuestPDF.Settings.License = LicenseType.Community;
-
                 await GneratePdf();
             }
             catch (Exception ex)
@@ -174,29 +176,41 @@ namespace GestionTickets.UI.ViewModels
 
         public async Task GneratePdf()
         {
-#if WINDOWS
-            if (SelectedMonthYear == null || SelectedMonthYear.Month == 0 || SelectedMonthYear.Year == 0)
-            {
-                await DisplayToast("Por favor, selecciona un mes y año válidos.");
-                return;
-            }
+            // Obtener mes y año seleccionados
+            var month = SelectedMonthYear?.Month ?? DateTime.Now.Month;
+            var year = SelectedMonthYear?.Year ?? DateTime.Now.Year;
 
-            var fileName = $"Tickets {SelectedMonthYear.Display}.pdf";
-            var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
+            string fileName = $"Tickets {month} - {year}.pdf";
 
-            var pdfBytes = PdfGenerator.GenerateTicketPdf(
-                            SelectedMonthYear.Month,
-                            SelectedMonthYear.Year,
-                            Tickets);
-            File.WriteAllBytes(filePath, pdfBytes);
-
-            await Launcher.OpenAsync(new OpenFileRequest
-            {
-                File = new ReadOnlyFile(filePath)
-            });
+#if ANDROID
+            var docsDirectory = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments);
+            var filePath = Path.Combine(docsDirectory!.AbsoluteFile.Path, fileName);
 #else
-            await DisplayToast("La generación de PDF solo está disponible en Windows.");
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), fileName);
 #endif
+
+
+
+            // Generar PDF en memoria usando iText
+            var pdfBytes = PdfGenerator.GenerateTicketPdfIText(month, year, Tickets);
+
+            // Guardar el PDF en disco
+            await File.WriteAllBytesAsync(filePath, pdfBytes);
+
+            string pdfSource = string.Empty;
+
+#if ANDROID
+            pdfSource = $"file:///android_asset/pdfjs/web/viewer.html?file=file://{WebUtility.UrlEncode(filePath)}";
+#else
+            pdfSource = filePath;
+#endif
+
+            var parameters = new ShellNavigationQueryParameters
+            {
+                { "PdfSource", pdfSource }
+            };
+            await Shell.Current.GoToAsync("pdf_viewer", parameters);
         }
     }
 }
+

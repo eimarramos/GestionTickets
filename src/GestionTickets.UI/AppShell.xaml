@@ -6,9 +6,10 @@
        xmlns:create_tickets="clr-namespace:GestionTickets.UI.Views.CreateTicket"
        xmlns:tickets="clr-namespace:GestionTickets.UI.Views.Tickets"
        xmlns:edit_ticket="clr-namespace:GestionTickets.UI.Views.EditTicket"
+       xmlns:pdf_viewer="clr-namespace:GestionTickets.UI.Views.PdfViewer"
        Shell.FlyoutBehavior="Disabled"
        Title="Gestión de Tickets">
-
+    
     <TabBar>
         <Tab Icon="add.png"
              Title="Registro de Tickets">
@@ -23,4 +24,7 @@
     </TabBar>
 
     <ShellContent ContentTemplate="{DataTemplate edit_ticket:EditTicketPage}" />
+
+    <ShellContent ContentTemplate="{DataTemplate pdf_viewer:PdfViewerPage}" />
+
 </Shell>

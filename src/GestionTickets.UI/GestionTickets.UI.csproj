@@ -76,9 +76,10 @@
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Maui" />
         <PackageReference Include="CommunityToolkit.Mvvm" />
+        <PackageReference Include="itext7" />
+        <PackageReference Include="itext7.bouncy-castle-adapter" />
         <PackageReference Include="Microsoft.Maui.Controls" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
-        <PackageReference Include="QuestPDF" />
     </ItemGroup>
 
     <ItemGroup>
@@ -94,6 +95,9 @@
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="Views\EditTicket\EditTicketPage.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="Views\PdfViewer\PdfViewerPage.xaml">
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="Views\SharedViews\LoaderView.xaml">

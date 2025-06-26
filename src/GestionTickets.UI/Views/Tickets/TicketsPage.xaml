@@ -83,14 +83,18 @@
                                HorizontalOptions="Center"
                                Grid.Column="2" />
                         <ImageButton Grid.Column="3"
+                                     WidthRequest="35"
                                      Source="edit.png"
-                                     Padding="10,0"
                                      Opacity="0"
+                                     Padding="8,0"
+                                     Margin="3"
                                      IsEnabled="False" />
                         <ImageButton Grid.Column="4"
+                                     WidthRequest="35"
                                      Source="delete.png"
-                                     Padding="10,0"
                                      Opacity="0"
+                                     Padding="8,0"
+                                     Margin="3"
                                      IsEnabled="False" />
                     </Grid>
 
@@ -131,15 +135,17 @@
                                            HorizontalOptions="Center"
                                            Padding="0,10" />
                                     <ImageButton Grid.Column="3"
+                                                 WidthRequest="35"
                                                  Source="edit.png"
                                                  Command="{Binding Path=BindingContext.GoToEditTicketCommand, Source={x:Reference TicketsPageView}}"
-                                                 CommandParameter="{Binding Id}" 
-                                                 Style="{StaticResource Edit}"/>
+                                                 CommandParameter="{Binding Id}"
+                                                 Style="{StaticResource Edit}" />
                                     <ImageButton Grid.Column="4"
+                                                 WidthRequest="35"
                                                  Source="delete.png"
                                                  Command="{Binding Path=BindingContext.DeleteTicketCommand, Source={x:Reference TicketsPageView}}"
                                                  CommandParameter="{Binding Id}"
-                                                 Style="{StaticResource Delete}"/>
+                                                 Style="{StaticResource Delete}" />
                                     <BoxView Grid.Row="1"
                                              Grid.ColumnSpan="5"
                                              HeightRequest="1"

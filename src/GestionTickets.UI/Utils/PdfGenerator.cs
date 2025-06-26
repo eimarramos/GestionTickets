@@ -1,95 +1,78 @@
 ﻿using GestionTickets.Domain.Entities;
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
+using iText.Kernel.Colors;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using System.Globalization;
-using IContainer = QuestPDF.Infrastructure.IContainer;
+using Border = iText.Layout.Borders.Border;
+using Cell = iText.Layout.Element.Cell;
+using TextAlignment = iText.Layout.Properties.TextAlignment;
+using VerticalAlignment = iText.Layout.Properties.VerticalAlignment;
 
 namespace GestionTickets.UI.Utils
 {
     public static class PdfGenerator
     {
-        private static readonly string PrimaryColor = "#2B365E";
-        private static readonly string SecondaryColor = "#0F172A";
-        private static readonly string Gray100 = "#E1E1E1";
-        private static readonly string Gray400 = "#6e6e6e";
-        private static readonly string White = "#FFFFFF";
-
-        private static readonly string Sign = "";
-
-        public static byte[] GenerateTicketPdf(int month, int year, IEnumerable<Ticket> tickets)
+        public static byte[] GenerateTicketPdfIText(int month, int year, IEnumerable<Ticket> tickets)
         {
-            return Document.Create(container =>
+            using var ms = new MemoryStream();
+            using var writer = new PdfWriter(ms);
+            using var pdf = new PdfDocument(writer);
+            using var document = new Document(pdf);
+
+            var primaryColor = WebColors.GetRGBColor("#2B365E");
+            var secondaryColor = WebColors.GetRGBColor("#0F172A");
+            var gray100 = WebColors.GetRGBColor("#E1E1E1");
+            var gray400 = WebColors.GetRGBColor("#6e6e6e");
+
+            var headerTable = new Table(UnitValue.CreatePercentArray(new float[] { 3, 1 })).UseAllAvailableWidth();
+            headerTable.SetBackgroundColor(primaryColor).SetMarginBottom(20);
+            headerTable.AddCell(new Cell().Add(new Paragraph("Tickets del mes").SetFontColor(ColorConstants.WHITE).SetFontSize(22).SimulateBold().SetPaddingLeft(5))
+                .SetBorder(Border.NO_BORDER).SetVerticalAlignment(VerticalAlignment.MIDDLE));
+            headerTable.AddCell(new Cell().Add(new Paragraph($"{month:D2}/{year}").SetFontColor(ColorConstants.WHITE).SetFontSize(16).SetPaddingRight(5))
+                .SetBorder(Border.NO_BORDER).SetTextAlignment(TextAlignment.RIGHT).SetVerticalAlignment(VerticalAlignment.MIDDLE));
+            document.Add(headerTable);
+
+            var resumenTable = new Table(1).UseAllAvailableWidth();
+            resumenTable.SetBackgroundColor(gray100).SetMarginBottom(20);
+            resumenTable.AddCell(new Cell().Add(new Paragraph("Resumen de Tickets").SetFontColor(secondaryColor).SetFontSize(16).SimulateBold().SetPadding(3))
+                .SetBorder(Border.NO_BORDER));
+            resumenTable.AddCell(new Cell().Add(new Paragraph($"Total de tickets: {tickets.Count()}").SetFontColor(gray400).SetFontSize(12).SetPadding(3))
+                .SetBorder(Border.NO_BORDER));
+            resumenTable.AddCell(new Cell().Add(new Paragraph($"Total recaudado: {tickets.Sum(t => t.Price):C2}").SetFontColor(gray400).SetFontSize(12).SetPadding(3))
+                .SetBorder(Border.NO_BORDER));
+            document.Add(resumenTable);
+
+            document.Add(new Paragraph("Detalle de Tickets").SetFontColor(primaryColor).SetFontSize(16).SimulateBold().SetMarginBottom(10));
+
+            var table = new Table(UnitValue.CreatePercentArray(new float[] { 1, 2, 2 })).UseAllAvailableWidth();
+
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Nº").SetFontColor(ColorConstants.WHITE).SimulateBold())
+                .SetBackgroundColor(primaryColor).SetPadding(6).SetBorder(Border.NO_BORDER));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Fecha").SetFontColor(ColorConstants.WHITE).SimulateBold())
+                .SetBackgroundColor(primaryColor).SetPadding(6).SetBorder(Border.NO_BORDER));
+            table.AddHeaderCell(new Cell().Add(new Paragraph("Precio").SetFontColor(ColorConstants.WHITE).SimulateBold())
+                .SetBackgroundColor(primaryColor).SetPadding(6).SetBorder(Border.NO_BORDER));
+
+            foreach (var ticket in tickets.OrderBy(t => t.TicketNumber))
             {
-                container.Page(page =>
-                {
-                    page.Size(PageSizes.A4);
-                    page.Margin(2, Unit.Centimetre);
-                    page.PageColor(White);
+                table.AddCell(new Cell().Add(new Paragraph(ticket.TicketNumber.ToString()))
+                    .SetBorderBottom(new SolidBorder(gray100, 0.5f)).SetPadding(5).SetBorderLeft(Border.NO_BORDER).SetBorderRight(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
+                table.AddCell(new Cell().Add(new Paragraph(ticket.Date.ToString("dd/MM/yyyy")))
+                    .SetBorderBottom(new SolidBorder(gray100, 0.5f)).SetPadding(5).SetBorderLeft(Border.NO_BORDER).SetBorderRight(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
+                table.AddCell(new Cell().Add(new Paragraph(ticket.Price.ToString("C2", CultureInfo.CurrentCulture)))
+                    .SetBorderBottom(new SolidBorder(gray100, 0.5f)).SetPadding(5).SetBorderLeft(Border.NO_BORDER).SetBorderRight(Border.NO_BORDER).SetBorderTop(Border.NO_BORDER));
+            }
+            document.Add(table);
 
-                    page.Header().Background(PrimaryColor).Padding(10).Row(row =>
-                    {
-                        row.RelativeItem().AlignLeft().Text("Tickets del mes")
-                            .FontSize(22).Bold().FontColor(White);
-                        row.ConstantItem(120).AlignRight().Text($"{month:D2}/{year}")
-                            .FontSize(16).FontColor(White);
-                    });
+            // Firma
+            document.Add(new Paragraph("Adolfo Sacari")
+                .SetFontColor(gray400).SetFontSize(10).SimulateItalic().SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(20));
 
-                    page.Content().Column(col =>
-                    {
-                        col.Spacing(20);
-
-                        col.Item().Background(Gray100).Padding(10).Column(summary =>
-                        {
-                            summary.Spacing(10);
-
-                            summary.Item().Text("Resumen de Tickets")
-                                .FontSize(16).Bold().FontColor(SecondaryColor);
-                            summary.Item().Text($"Total de tickets: {tickets.Count()}")
-                                .FontSize(12).FontColor(Gray400);
-                            summary.Item().Text($"Total recaudado: {tickets.Sum(t => t.Price):C2}")
-                                .FontSize(12).FontColor(Gray400);
-                        });
-
-                        col.Item().Text("Detalle de Tickets")
-                            .FontSize(16).Bold().FontColor(PrimaryColor);
-
-                        col.Item().Table(table =>
-                        {
-                            table.ColumnsDefinition(columns =>
-                            {
-                                columns.ConstantColumn(40);  
-                                columns.RelativeColumn(2);  
-                                columns.RelativeColumn(2);
-                            });
-
-                            table.Header(header =>
-                            {
-                                header.Cell().Element(CellHeaderStyle).Text("Nº").FontColor(White).Bold();
-                                header.Cell().Element(CellHeaderStyle).Text("Fecha").FontColor(White).Bold();
-                                header.Cell().Element(CellHeaderStyle).Text("Precio").FontColor(White).Bold();
-                            });
-
-                            foreach (var ticket in tickets.OrderBy(t => t.TicketNumber))
-                            {
-                                table.Cell().Element(CellStyle).Text(ticket.TicketNumber.ToString());
-                                table.Cell().Element(CellStyle).Text(ticket.Date.ToString("dd/MM/yyyy"));
-                                table.Cell().Element(CellStyle).Text(ticket.Price.ToString("C2", CultureInfo.CurrentCulture));
-                            }
-
-                            static IContainer CellHeaderStyle(IContainer container) =>
-                                container.Background(PrimaryColor).PaddingVertical(6).PaddingHorizontal(5);
-
-                            static IContainer CellStyle(IContainer container) =>
-                                container.PaddingVertical(5).BorderBottom(0.5f).BorderColor(Gray100);
-                        });
-
-                        // Firma
-                        col.Item().AlignRight().PaddingTop(20).Text(Sign)
-                            .FontSize(10).FontColor(Gray400).Italic();
-                    });
-                });
-            }).GeneratePdf();
+            document.Close();
+            return ms.ToArray();
         }
     }
 }
