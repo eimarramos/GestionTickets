@@ -34,6 +34,7 @@
                     <Picker x:Name="monthPicker"
                             Title="{OnPlatform Android='Selecciona un mes'}"
                             Grid.Column="0"
+                            Grid.ColumnSpan="{OnPlatform Default=2, Android=1, iOS=1}"
                             ItemsSource="{Binding AvailableMonths}"
                             ItemDisplayBinding="{Binding Display}"
                             SelectedItem="{Binding SelectedMonthYear}"
@@ -73,7 +74,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Label Text="Nº Ticket"
+                        <Label Text="Ticket"
                                FontSize="16"
                                TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
                                HorizontalOptions="Center"

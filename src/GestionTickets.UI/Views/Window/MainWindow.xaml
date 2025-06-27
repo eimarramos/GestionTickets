@@ -4,7 +4,7 @@
         x:Class="GestionTickets.UI.Views.Window.MainWindow"
         xmlns:local="clr-namespace:GestionTickets.UI">
     <Window.TitleBar>
-        <TitleBar Title="Gestión Tickets"
+        <TitleBar Title="Gestión de Tickets"
                   BackgroundColor="{StaticResource Primary}"
                   ForegroundColor="{StaticResource White}"
                   HeightRequest="48">
