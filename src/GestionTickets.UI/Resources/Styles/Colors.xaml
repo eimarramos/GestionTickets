@@ -20,13 +20,18 @@
     
     <Color x:Key="SecondaryDark">#0F172A</Color>
 
-    <Color x:Key="Warning">#D04040</Color>
-    <Color x:Key="WarningHover">#E05A5A</Color>
-    <Color x:Key="WarningPressed">#A83232</Color>
+    <Color x:Key="BackgroundLight">#FAFBFE</Color>
+    <Color x:Key="Background">#F4F8FD</Color>
+    <Color x:Key="Background100">#E9ECF5</Color>
+    <Color x:Key="Background200">#E1E5EF</Color>
 
-    <Color x:Key="Blue">#78aef3</Color>
-    <Color x:Key="BlueHover">#99c6f6</Color>
-    <Color x:Key="BluePressed">#4a8ad1</Color>
+    <Color x:Key="Warning">#D04040</Color>
+    <Color x:Key="WarningHover">#FDEAEA</Color>
+    <Color x:Key="WarningPressed">#F9C7C7</Color>
+
+    <Color x:Key="Blue">#2f5688</Color>
+    <Color x:Key="BlueHover">#EAF3FD</Color>
+    <Color x:Key="BluePressed">#CFE3FA</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
@@ -42,6 +47,10 @@
     <Color x:Key="Gray600">#989499</Color>
     <Color x:Key="Gray900">#212021</Color>
     <Color x:Key="Gray950">#030303</Color>
+
+    <Color x:Key="White10Transparent">#1AFFFFFF</Color>
+    <SolidColorBrush x:Key="White10TransparentBrush"
+                     Color="{StaticResource White10Transparent}" />
 
     <SolidColorBrush x:Key="PrimaryBrush"
                      Color="{StaticResource Primary}" />

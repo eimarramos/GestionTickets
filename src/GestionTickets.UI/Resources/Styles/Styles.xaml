@@ -3,6 +3,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <Style TargetType="Page"
+           ApplyToDerivedTypes="True">
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource Background}}"/>
+    </Style>
+
     <Style TargetType="Shell"
            ApplyToDerivedTypes="True">
         <Setter Property="Shell.BackgroundColor"
@@ -58,25 +66,25 @@
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
                             <Setter Property="TextColor"
-                                    Value="{StaticResource White}" />
+                                    Value="{StaticResource Black}" />
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource Secondary}}" />
+                                    Value="{AppThemeBinding Light={StaticResource White}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource SecondaryHover}}" />
+                                    Value="{AppThemeBinding Light={StaticResource Gray100}}" />
                             <Setter Property="TextColor"
-                                    Value="{StaticResource White}" />
+                                    Value="{StaticResource Black}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource SecondaryPressed}}" />
+                                    Value="{AppThemeBinding Light={StaticResource Gray200}}" />
                             <Setter Property="TextColor"
-                                    Value="{StaticResource White}" />
+                                    Value="{StaticResource Black}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -89,13 +97,11 @@
         <Setter Property="CornerRadius"
                 Value="5" />
         <Setter Property="Padding"
-                Value="8,0" />
-        <Setter Property="Margin"
-                Value="3" />
+                Value="5" />
         <Setter Property="BorderWidth"
-                Value="1" />
+                Value="0.5" />
         <Setter Property="BorderColor"
-                Value="{StaticResource Gray200}" />
+                Value="{StaticResource Warning}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -108,13 +114,13 @@
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource Gray100}" />
+                                    Value="{StaticResource WarningHover}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource Gray200}" />
+                                    Value="{StaticResource WarningPressed}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -127,13 +133,11 @@
         <Setter Property="CornerRadius"
                 Value="5" />
         <Setter Property="Padding"
-                Value="8,0" />
-        <Setter Property="Margin"
-                Value="3" />
+                Value="5" />
         <Setter Property="BorderWidth"
-                Value="1" />
+                Value="0.5" />
         <Setter Property="BorderColor"
-                Value="{StaticResource Gray200}" />
+                Value="{StaticResource Blue}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -146,13 +150,13 @@
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource Gray100}" />
+                                    Value="{StaticResource BlueHover}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{StaticResource Gray200}" />
+                                    Value="{StaticResource BluePressed}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
