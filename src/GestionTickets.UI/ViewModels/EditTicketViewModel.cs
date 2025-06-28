@@ -33,7 +33,7 @@ namespace GestionTickets.UI.ViewModels
             if (ticket != null)
             {
                 Ticket = ticket;
-                Title = $"Editar Ticket Nº {Ticket.TicketNumber}";
+                Title = $"Editar Ticket # {Ticket.TicketNumber}";
             }
         }
 

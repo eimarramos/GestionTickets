@@ -84,11 +84,18 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0"
-                                   Text="Lista de Tickets"
-                                   TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
-                                   FontSize="26"
-                                   FontFamily="{StaticResource CatamaranBold}" />
+                            <HorizontalStackLayout Grid.Column="0"
+                                                   Spacing="8">
+                                <Image Source="file_t2.png">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                    </Image.Behaviors>
+                                </Image>
+                                <Label Text="Lista de Tickets"
+                                       TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                                       FontSize="26"
+                                       FontFamily="{StaticResource CatamaranBold}" />
+                            </HorizontalStackLayout>
                         </Grid>
                         <BoxView HeightRequest="0.5"
                                  Color="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray600}}" />

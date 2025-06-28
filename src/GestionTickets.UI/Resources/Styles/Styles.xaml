@@ -59,6 +59,10 @@
                 Value="{StaticResource CatamaranSemiBold}" />
         <Setter Property="CornerRadius"
                 Value="10" />
+        <Setter Property="BorderWidth"
+                Value="0.5" />
+        <Setter Property="BorderColor"
+                Value="{StaticResource Blue}" />
 
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -66,25 +70,25 @@
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
                             <Setter Property="TextColor"
-                                    Value="{StaticResource Black}" />
+                                    Value="{StaticResource White}" />
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource White}}" />
+                                    Value="{AppThemeBinding Light={StaticResource PrimaryButton}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource Gray100}}" />
+                                    Value="{AppThemeBinding Light={StaticResource PrimaryButtonHover}}" />
                             <Setter Property="TextColor"
-                                    Value="{StaticResource Black}" />
+                                    Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource Gray200}}" />
+                                    Value="{AppThemeBinding Light={StaticResource PrimaryButtonPressed}}" />
                             <Setter Property="TextColor"
-                                    Value="{StaticResource Black}" />
+                                    Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -171,7 +175,7 @@
         <Setter Property="FontFamily"
                 Value="{StaticResource CatamaranMedium}" />
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}" />
+                Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource PrimaryDarkText}}" />
     </Style>
 
     <Style TargetType="Border"
