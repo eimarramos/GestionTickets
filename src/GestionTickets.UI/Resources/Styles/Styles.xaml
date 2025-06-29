@@ -235,7 +235,7 @@
         <Setter Property="StrokeShape"
                 Value="RoundRectangle 10" />
         <Setter Property="Stroke"
-                Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" />
+                Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
     </Style>
 
     <Style TargetType="Border"
