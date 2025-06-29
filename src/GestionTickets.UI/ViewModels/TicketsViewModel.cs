@@ -20,7 +20,16 @@ namespace GestionTickets.UI.ViewModels
         }
 
         [ObservableProperty]
+        public partial int TotalTickets { get; set; } = 0;
+
+        [ObservableProperty]
+        public partial int TotalTicketsToday { get; set; } = 0;
+
+        [ObservableProperty]
         public partial decimal Total { get; set; } = 0;
+
+        [ObservableProperty]
+        public partial decimal Average { get; set; } = 0;
 
         [ObservableProperty]
         public partial MonthYearItem? SelectedMonthYear { get; set; }
@@ -69,7 +78,7 @@ namespace GestionTickets.UI.ViewModels
                 {
                     Tickets.Remove(ticketToRemove);
 
-                    CalculateTotal(Tickets);
+                    OnTicketsChanged(Tickets);
                 }
             }
             catch (Exception ex)
@@ -144,11 +153,30 @@ namespace GestionTickets.UI.ViewModels
         partial void OnTicketsChanged(ObservableCollection<Ticket> value)
         {
             CalculateTotal(value);
+            CalculateAverage(value);
+            CalculateTotalToday(value);
+            TotalTickets = value.Count;
         }
 
         public void CalculateTotal(ObservableCollection<Ticket> tickets)
         {
             Total = tickets.Sum(t => t.Price);
+        }
+
+        public void CalculateAverage(ObservableCollection<Ticket> tickets)
+        {
+            if (tickets.Count == 0)
+            {
+                Average = 0;
+                return;
+            }
+            Average = tickets.Average(t => t.Price);
+        }
+
+        public void CalculateTotalToday(ObservableCollection<Ticket> tickets)
+        {
+            var today = DateTime.Today;
+            TotalTicketsToday = tickets.Count(t => t.Date.Date == today);
         }
 
         [RelayCommand]

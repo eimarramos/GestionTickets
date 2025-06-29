@@ -9,7 +9,7 @@
     <Color x:Key="Primary">#0f172a</Color>
     <Color x:Key="PrimaryDark">#0f172a</Color>
 
-    <Color x:Key="Primary-500">#465691</Color>
+    <Color x:Key="Primary-500">#B0B6C3</Color>
 
     <Color x:Key="PrimaryText">Black</Color>
     <Color x:Key="PrimaryDarkText">White</Color>
@@ -19,6 +19,26 @@
     <Color x:Key="SecondaryPressed">#0A1420</Color>
     
     <Color x:Key="SecondaryDark">#0F172A</Color>
+
+    <Color x:Key="BorderLeftGreen">#10B981</Color>
+    <Color x:Key="BackgroundGreenLight">#D1FAE5</Color>
+    <Color x:Key="IconGreenDark">#047857</Color>
+    <Color x:Key="TextGreenDarker">#065F46</Color>
+
+    <Color x:Key="BorderLeftBlue">#4A5D8C</Color>
+    <Color x:Key="IconBlueDark">#2B365E</Color>
+    <Color x:Key="BackgroundBlueLight">#E1E5EF</Color>
+    <Color x:Key="TextBlueDarker">#1F2847</Color>
+
+    <Color x:Key="BorderLeftOrange">#F59E42</Color>
+    <Color x:Key="BackgroundOrangeLight">#FFF7ED</Color>
+    <Color x:Key="IconOrangeDark">#B45309</Color>
+    <Color x:Key="TextOrangeDarker">#92400E</Color>
+
+    <Color x:Key="BorderLeftPurple">#8B5CF6</Color>
+    <Color x:Key="BackgroundPurpleLight">#F3E8FF</Color>
+    <Color x:Key="IconPurpleDark">#6D28D9</Color>
+    <Color x:Key="TextPurpleDarker">#4C1D95</Color>
 
     <Color x:Key="BackgroundLight">#FAFBFE</Color>
     <Color x:Key="Background">#1e293b</Color>
@@ -34,6 +54,7 @@
     <Color x:Key="WarningPressed">#F9C7C7</Color>
 
     <Color x:Key="Blue">#2f5688</Color>
+    <Color x:Key="BlueLight">#6A8FC2</Color>
     <Color x:Key="BlueHover">#EAF3FD</Color>
     <Color x:Key="BluePressed">#CFE3FA</Color>
 
@@ -49,6 +70,8 @@
     <Color x:Key="Gray400">#c1bfc2</Color>
     <Color x:Key="Gray500">#ada9ad</Color>
     <Color x:Key="Gray600">#989499</Color>
+    <Color x:Key="Gray700">#656266</Color>
+    <Color x:Key="Gray800">#403e41</Color>
     <Color x:Key="Gray900">#212021</Color>
     <Color x:Key="Gray950">#030303</Color>
 
@@ -77,6 +100,10 @@
                      Color="{StaticResource Gray500}" />
     <SolidColorBrush x:Key="Gray600Brush"
                      Color="{StaticResource Gray600}" />
+    <SolidColorBrush x:Key="Gray700Brush"
+                     Color="{StaticResource Gray700}" />
+    <SolidColorBrush x:Key="Gray800Brush"
+                     Color="{StaticResource Gray800}" />
     <SolidColorBrush x:Key="Gray900Brush"
                      Color="{StaticResource Gray900}" />
     <SolidColorBrush x:Key="Gray950Brush"

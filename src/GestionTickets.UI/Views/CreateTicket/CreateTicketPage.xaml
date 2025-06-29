@@ -15,12 +15,12 @@
             <shared:TitleView Grid.Row="0" />
             <Border Grid.Row="1"
                     VerticalOptions="Fill"
-                    MaximumHeightRequest="520"
-                    MaximumWidthRequest="800"
-                    Margin="11,0,11,0"
+                    MaximumHeightRequest="600"
+                    MaximumWidthRequest="600"
+                    Margin="5,0,5,10"
                     Padding="15,10"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource White}}"
-                    Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}"
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 10">
                 <Grid RowSpacing="10">
@@ -76,9 +76,6 @@
                                    Text="{Binding TicketPrice}" />
                             <Image Grid.Column="1"
                                    Source="euro.png">
-                                <Image.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource White}}" />
-                                </Image.Behaviors>
                             </Image>
                         </Grid>
                     </Border>
@@ -118,9 +115,6 @@
                                 VerticalOptions="End"
                                 ImageSource="plus.png"
                                 Command="{Binding AddTicketCommand}">
-                            <Button.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="{StaticResource White}" />
-                            </Button.Behaviors>
                         </Button>
                     </Grid>
                 </Grid>
