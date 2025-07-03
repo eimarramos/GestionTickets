@@ -22,6 +22,5 @@ Una aplicación de gestión de tickets construida con .NET 9 y .NET MAUI, siguie
 - ✅ Almacenamiento local en SQLite usando EF Core
 - ✅ Exportación de tickets en PDF utilizando iText
 - ✅ Navegación entre pantallas usando .NET MAUI Shell
-- ✅ Inyección de dependencias nativa
-- ✅ AutoMapper para mapear DTOs y entidades
+- ✅ Inyección de dependencias
 - ✅ Código limpio y mantenible gracias al uso de Arquitectura Hexagonal
