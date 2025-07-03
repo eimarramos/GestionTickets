@@ -10,7 +10,6 @@ Una aplicación de gestión de tickets construida con .NET 9 y .NET MAUI, siguie
 - 📱 **.NET MAUI**
 - 🧩 **Entity Framework Core 9**
 - 🗃️ **SQLite** como base de datos local
-- 🔄 **AutoMapper** para la transformación entre capas
 - 📦 **Patrón Repositorio**
 - ⚙️ **Inyección de Dependencias**
 - 📄 **iText** para la generación de tickets en formato PDF
