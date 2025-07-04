@@ -15,6 +15,8 @@ namespace GestionTickets.UI.Utils
 {
     public static class PdfGenerator
     {
+        private static readonly string Signature = "Eimar Ramos";
+
         public static byte[] GenerateTicketPdfIText(int month, int year, IEnumerable<Ticket> tickets)
         {
             using var ms = new MemoryStream();
@@ -67,8 +69,7 @@ namespace GestionTickets.UI.Utils
             }
             document.Add(table);
 
-            // Firma
-            document.Add(new Paragraph("")
+            document.Add(new Paragraph(Signature)
                 .SetFontColor(gray400).SetFontSize(10).SimulateItalic().SetTextAlignment(TextAlignment.RIGHT).SetMarginTop(20));
 
             document.Close();

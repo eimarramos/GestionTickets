@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GestionTickets.UI.Views.Tickets.ContentViews.TableDesktopView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:entities="clr-namespace:GestionTickets.Domain.Entities;assembly=GestionTickets.Domain"
+             x:DataType="entities:Ticket">
+    <VerticalStackLayout>
+        <Grid BackgroundColor="{OnPlatform WinUI=Transparent}"
+              Padding="{OnPlatform WinUI='30,10', Default='5,5'}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HorizontalStackLayout Grid.Column="0"
+                                   Spacing="5">
+                <Border VerticalOptions="Center"
+                        BackgroundColor="{StaticResource Background100}"
+                        Padding="8"
+                        Margin="5"
+                        StrokeShape="RoundRectangle 8">
+                    <Image Source="file.png"
+                           HeightRequest="15" />
+                </Border>
+                <Label Text="{Binding TicketNumber, StringFormat='#{0}'}"
+                       FontAttributes="Bold"
+                       FontSize="16"
+                       FontAutoScalingEnabled="False"
+                       TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                       Padding="0,10" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding Price, StringFormat='{0:F2} €'}"
+                   FontAttributes="Bold"
+                   Grid.Column="1"
+                   FontSize="16"
+                   FontAutoScalingEnabled="False"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                   HorizontalOptions="Center"
+                   Padding="0,10" />
+            <Label Text="{Binding Date, StringFormat='{0:dd/MM/yy}'}"
+                   Grid.Column="2"
+                   FontSize="16"
+                   FontAutoScalingEnabled="False"
+                   TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                   HorizontalOptions="Center"
+                   Padding="0,10" />
+            <HorizontalStackLayout Grid.Column="3"
+                                   Spacing="5">
+                <ImageButton WidthRequest="36"
+                             HeightRequest="36"
+                             Source="edit.png"
+                             Aspect="Center"
+                             Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.GoToEditTicketCommand}"
+                             CommandParameter="{Binding Id}"
+                             Style="{StaticResource Edit}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{StaticResource BlueLight}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <ImageButton  WidthRequest="36"
+                              HeightRequest="36"
+                              Source="delete.png"
+                              Aspect="Center"
+                              Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.DeleteTicketCommand}"
+                              CommandParameter="{Binding Id}"
+                              Style="{StaticResource Delete}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{StaticResource Warning}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </HorizontalStackLayout>
+        </Grid>
+        <BoxView HeightRequest="0.5"
+                 Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+    </VerticalStackLayout>
+</ContentView>

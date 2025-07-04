@@ -46,8 +46,6 @@
                 Value="{StaticResource Gray300}" />
         <Setter Property="FontSize"
                 Value="16" />
-        <Setter Property="FontFamily"
-                Value="{StaticResource CatamaranRegular}" />
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}" />
     </Style>
@@ -98,8 +96,6 @@
 
     <Style TargetType="Button"
            x:Key="TransparentButton">
-        <Setter Property="HeightRequest"
-                Value="38" />
         <Setter Property="FontSize"
                 Value="16" />
         <Setter Property="FontFamily"
@@ -119,7 +115,7 @@
                             <Setter Property="TextColor"
                                     Value="{AppThemeBinding Light={StaticResource Gray800}, Dark={StaticResource Gray300}}" />
                             <Setter Property="BackgroundColor"
-                                    Value="{AppThemeBinding Light={StaticResource BackgroundBlueLight}, Dark={StaticResource Gray800}}" />
+                                    Value="{AppThemeBinding Light={StaticResource Background100}, Dark={StaticResource Gray800}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver">
@@ -240,8 +236,8 @@
 
     <Style TargetType="Border"
            x:Key="Card">
-        <Setter Property="Padding"
-                Value="10" />
+        <Setter Property="Margin"
+                Value="2.5,2.5" />
         <Setter Property="StrokeThickness"
                 Value="0" />
         <Setter Property="StrokeShape"
