@@ -7,119 +7,122 @@
              xmlns:shared="clr-namespace:GestionTickets.UI.Views.SharedViews"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     <Grid>
-        <Grid RowSpacing="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <shared:TitleView Grid.Row="0" />
-            <Border Grid.Row="1"
-                    VerticalOptions="Fill"
-                    MaximumHeightRequest="600"
-                    MaximumWidthRequest="600"
-                    Margin="5,0,5,10"
-                    Padding="15,10"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource White}}"
-                    Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
-                    StrokeThickness="1"
-                    StrokeShape="RoundRectangle 10">
-                <Grid RowSpacing="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0"
-                           Text="Editar Ticket"
-                           TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
-                           FontSize="24"
-                           FontFamily="{StaticResource CatamaranSemiBold}"
-                           Padding="5,0" />
+        <ScrollView>
+            <Grid RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <shared:TitleView Grid.Row="0" />
+                <Border Grid.Row="1"
+                        VerticalOptions="Fill"
+                        MaximumHeightRequest="600"
+                        MaximumWidthRequest="600"
+                        Margin="5,0,5,10"
+                        Padding="15,10"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource White}}"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10">
+                    <Grid RowSpacing="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               Text="Editar Ticket"
+                               TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                               FontSize="24"
+                               FontFamily="{StaticResource CatamaranSemiBold}"
+                               Padding="5,0" />
 
-                    <Label Grid.Row="1"
-                           Text="Número (opcional)"
-                           Style="{StaticResource EntryLabel}" />
-                    <Border Grid.Row="2"
-                            Style="{StaticResource EntryBorder}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Entry Grid.Row="0"
-                                   Placeholder="Auto generado si se deja vacío"
-                                   Keyboard="Numeric"
-                                   ReturnType="Next"
-                                   Text="{Binding Ticket.TicketNumber}" />
+                        <Label Grid.Row="1"
+                               Text="Número (opcional)"
+                               Style="{StaticResource EntryLabel}" />
+                        <Border Grid.Row="2"
+                                Style="{StaticResource EntryBorder}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Entry Grid.Row="0"
+                                       Placeholder="Auto generado si se deja vacío"
+                                       Keyboard="Numeric"
+                                       ReturnType="Next"
+                                       Text="{Binding TicketNumber}" />
+                            </Grid>
+                        </Border>
+
+                        <Label Grid.Row="3"
+                               Text="Precio"
+                               Style="{StaticResource EntryLabel}" />
+                        <Border Grid.Row="4"
+                                Style="{StaticResource EntryBorder}">
+                            <Grid ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Entry x:Name="PriceEntry"
+                                       Grid.Column="0"
+                                       Placeholder="Ingrese el precio"
+                                       Keyboard="Numeric"
+                                       ReturnType="Done"
+                                       Text="{Binding TicketPrice}" />
+                                <Image Grid.Column="1"
+                                       Source="euro.png">
+                                </Image>
+                            </Grid>
+                        </Border>
+
+                        <Label Grid.Row="5"
+                               Text="Fecha"
+                               Style="{StaticResource EntryLabel}" />
+                        <Border Grid.Row="6"
+                                Style="{StaticResource EntryBorder}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCalendarTapped" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0"
+                                       Source="calendar.png"
+                                       IsVisible="{OnPlatform WinUI=False, Default=True}">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                    </Image.Behaviors>
+                                </Image>
+                                <DatePicker x:Name="datePicker"
+                                            Grid.Column="{OnPlatform Default=0, Android=1, iOS=1}"
+                                            Grid.ColumnSpan="{OnPlatform Default=2, Android=1, iOS=1}"
+                                            FontSize="16"
+                                            FontFamily="{StaticResource CatamaranRegular}"
+                                            Format="{OnPlatform WinUI='dd/MM/yyyy', Android='dd \'de\' MMMM \'de\' yyyy'}"
+                                            TextColor="{AppThemeBinding Light={StaticResource PrimaryText}, Dark={StaticResource PrimaryDarkText}}"
+                                            Date="{Binding TicketDate}" />
+                            </Grid>
+                        </Border>
+
+                        <Grid Grid.Row="7">
+                            <Button Text="Aceptar"
+                                    VerticalOptions="End"
+                                    ImageSource="edit.png"
+                                    Command="{Binding UpdateTicketCommand}">
+                            </Button>
                         </Grid>
-                    </Border>
-
-                    <Label Grid.Row="3"
-                           Text="Precio"
-                           Style="{StaticResource EntryLabel}" />
-                    <Border Grid.Row="4"
-                            Style="{StaticResource EntryBorder}">
-                        <Grid ColumnSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Entry x:Name="PriceEntry"
-                                   Grid.Column="0"
-                                   Placeholder="Ingrese el precio"
-                                   Keyboard="Numeric"
-                                   ReturnType="Done"
-                                   Text="{Binding Ticket.Price}" />
-                            <Image Grid.Column="1"
-                                   Source="euro.png">
-                            </Image>
-                        </Grid>
-                    </Border>
-
-                    <Label Grid.Row="5"
-                           Text="Fecha"
-                           Style="{StaticResource EntryLabel}" />
-                    <Border Grid.Row="6"
-                            Style="{StaticResource EntryBorder}">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCalendarTapped" />
-                        </Border.GestureRecognizers>
-                        <Grid ColumnSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0"
-                                   Source="calendar.png"
-                                   IsVisible="{OnPlatform WinUI=False, Default=True}">
-                                <Image.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                                </Image.Behaviors>
-                            </Image>
-                            <DatePicker x:Name="datePicker"
-                                        Grid.Column="{OnPlatform Default=0, Android=1, iOS=1}"
-                                        Grid.ColumnSpan="{OnPlatform Default=2, Android=1, iOS=1}"
-                                        FontSize="16"
-                                        FontFamily="{StaticResource CatamaranRegular}"
-                                        Format="{OnPlatform WinUI='dd/MM/yyyy', Android='dd \'de\' MMMM \'de\' yyyy'}"
-                                        Date="{Binding Ticket.Date}" />
-                        </Grid>
-                    </Border>
-
-                    <Grid Grid.Row="7">
-                        <Button Text="Aceptar"
-                                VerticalOptions="End"
-                                ImageSource="edit.png"
-                                Command="{Binding UpdateTicketCommand}">
-                        </Button>
                     </Grid>
-                </Grid>
-            </Border>
-        </Grid>
+                </Border>
+            </Grid>
+        </ScrollView>
         <shared:LoaderView />
     </Grid>
 </ContentPage>

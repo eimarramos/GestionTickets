@@ -9,8 +9,16 @@ namespace GestionTickets.UI.ViewModels
     {
         private readonly TicketService _ticketService;
 
+        private int TicketId { get; set; }
+
         [ObservableProperty]
-        public partial Ticket Ticket { get; set; } = new Ticket();
+        public partial string TicketNumber { get; set; } = string.Empty;
+
+        [ObservableProperty]
+        public partial decimal TicketPrice { get; set; } = 0;
+
+        [ObservableProperty]
+        public partial DateTime TicketDate { get; set; } = DateTime.Now;
 
         public EditTicketViewModel(TicketService ticketService)
         {
@@ -32,8 +40,28 @@ namespace GestionTickets.UI.ViewModels
 
             if (ticket != null)
             {
-                Ticket = ticket;
-                Title = $"Editar Ticket # {Ticket.TicketNumber}";
+                TicketId = ticket.Id;
+                TicketNumber = ticket.TicketNumber.ToString();
+                TicketPrice = ticket.Price;
+                TicketDate = ticket.Date;
+                Title = $"Editar Ticket # {ticket.TicketNumber}";
+            }
+        }
+
+        partial void OnTicketPriceChanged(decimal value)
+        {
+            var rounded = Math.Round(value, 2);
+            if (rounded != TicketPrice)
+                TicketPrice = rounded;
+        }
+
+        partial void OnTicketNumberChanged(string value)
+        {
+            if (decimal.TryParse(value, out var ticketNumber))
+            {
+                var rounded = Math.Round(ticketNumber, 0);
+                if (rounded.ToString() != TicketNumber)
+                    TicketNumber = rounded.ToString();
             }
         }
 
@@ -46,7 +74,14 @@ namespace GestionTickets.UI.ViewModels
             {
                 IsBusy = true;
 
-                await _ticketService.UpdateTicketAsync(Ticket);
+                await _ticketService.UpdateTicketAsync(new Ticket
+                {
+                    Id = this.TicketId,
+                    TicketNumber = int.Parse(string.IsNullOrEmpty(this.TicketNumber) ? "0" : this.TicketNumber),
+                    Price = this.TicketPrice,
+                    Date = this.TicketDate
+                });
+
                 await DisplayToast("Ticket actualizado correctamente.");
                 await Shell.Current.GoToAsync("..", false);
             }
